@@ -1,20 +1,70 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useWines, useDeleteWine } from '../hooks/useWines'
 import { useToastStore } from '../stores/toastStore'
 import WineList from '../components/WineList'
 import Modal from '../components/Modal'
 import WineForm from '../components/WineForm'
+import WineSortSelect from '../components/WineSortSelect'
 import { useCreateWine, useUpdateWine } from '../hooks/useWines'
 
 const WinesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingWine, setEditingWine] = useState(null)
+  const [sortOption, setSortOption] = useState('name_asc')
 
   const { data: wines, isLoading, error, refetch } = useWines()
   const createWine = useCreateWine()
   const updateWine = useUpdateWine()
   const deleteWine = useDeleteWine()
   const addToast = useToastStore((state) => state.addToast)
+
+  const sortedWines = useMemo(() => {
+    if (!wines || !Array.isArray(wines)) {
+      return []
+    }
+
+    const winesCopy = [...wines]
+
+    const sortFunctions = {
+      name_asc: (a, b) => {
+        const nameA = (a.name || '').toLowerCase()
+        const nameB = (b.name || '').toLowerCase()
+        return nameA.localeCompare(nameB)
+      },
+      name_desc: (a, b) => {
+        const nameA = (a.name || '').toLowerCase()
+        const nameB = (b.name || '').toLowerCase()
+        return nameB.localeCompare(nameA)
+      },
+      price_asc: (a, b) => {
+        const priceA = a.price || 0
+        const priceB = b.price || 0
+        return priceA - priceB
+      },
+      price_desc: (a, b) => {
+        const priceA = a.price || 0
+        const priceB = b.price || 0
+        return priceB - priceA
+      },
+      year_desc: (a, b) => {
+        const yearA = a.year || 0
+        const yearB = b.year || 0
+        return yearB - yearA
+      },
+      year_asc: (a, b) => {
+        const yearA = a.year || 0
+        const yearB = b.year || 0
+        return yearA - yearB
+      }
+    }
+
+    const sortFn = sortFunctions[sortOption]
+    if (sortFn) {
+      winesCopy.sort(sortFn)
+    }
+
+    return winesCopy
+  }, [wines, sortOption])
 
   const handleOpenModal = (wine = null) => {
     setEditingWine(wine)
@@ -64,7 +114,9 @@ const WinesPage = () => {
         </p>
       </div>
 
-      <div className="flex justify-end mb-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <WineSortSelect value={sortOption} onChange={setSortOption} />
+        
         <button
           onClick={() => handleOpenModal()}
           className="bg-wine-700 text-white hover:bg-wine-500 px-4 py-2 h-11 rounded-md font-inter font-medium transition-all flex items-center gap-2"
@@ -87,7 +139,7 @@ const WinesPage = () => {
       </div>
 
       <WineList
-        wines={Array.isArray(wines) ? wines : []}
+        wines={sortedWines}
         isLoading={isLoading}
         error={error}
         onEdit={handleOpenModal}
