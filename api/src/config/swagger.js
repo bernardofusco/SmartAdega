@@ -12,6 +12,16 @@ const options = {
         email: 'contato@smartadega.com'
       }
     },
+    tags: [
+      {
+        name: 'System',
+        description: 'Rotas de sistema e monitoramento'
+      },
+      {
+        name: 'Wines',
+        description: 'Gestao de vinhos'
+      }
+    ],
     servers: [
       {
         url: 'https://smartadega.onrender.com',
@@ -204,7 +214,7 @@ const options = {
       }
     ]
   },
-  apis: ['./src/routes/*.js']
+  apis: ['./src/routes/*.js', './src/index.js']
 };
 
 const swaggerSpec = swaggerJsdoc(options);

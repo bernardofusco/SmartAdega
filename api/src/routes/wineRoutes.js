@@ -4,7 +4,7 @@ const wineController = require('../controllers/wineController');
 
 /**
  * @swagger
- * /wines:
+ * /api/wines:
  *   post:
  *     summary: Criar um novo vinho
  *     tags: [Wines]
@@ -40,7 +40,7 @@ router.post('/wines', (req, res, next) => wineController.createWine(req, res, ne
 
 /**
  * @swagger
- * /wines:
+ * /api/wines:
  *   get:
  *     summary: Listar todos os vinhos do usuario
  *     tags: [Wines]
@@ -66,7 +66,7 @@ router.get('/wines', (req, res, next) => wineController.getWines(req, res, next)
 
 /**
  * @swagger
- * /wines/{id}:
+ * /api/wines/{id}:
  *   get:
  *     summary: Obter um vinho especifico
  *     tags: [Wines]
@@ -104,7 +104,7 @@ router.get('/wines/:id', (req, res, next) => wineController.getWineById(req, res
 
 /**
  * @swagger
- * /wines/{id}:
+ * /api/wines/{id}:
  *   put:
  *     summary: Atualizar um vinho
  *     tags: [Wines]
@@ -154,7 +154,7 @@ router.put('/wines/:id', (req, res, next) => wineController.updateWine(req, res,
 
 /**
  * @swagger
- * /wines/{id}:
+ * /api/wines/{id}:
  *   delete:
  *     summary: Deletar um vinho
  *     tags: [Wines]
