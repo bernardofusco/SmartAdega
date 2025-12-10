@@ -16,83 +16,52 @@ const WineCard = ({ wine, onEdit, onDelete }) => {
 
   return (
     <>
-      <div className="card p-6 hover:shadow-lg transition-all duration-200">
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex-1">
+      <div className="bg-white shadow-soft rounded-lg p-4 flex gap-4">
+        <div className="w-16 h-24 bg-base-surface rounded-md" />
+
+        <div className="flex flex-col flex-1">
           <Link 
             to={`/wines/${wine.id}`}
-            className="block hover:text-primary transition-colors"
+            className="block hover:opacity-80 transition-opacity"
           >
-            <h3 className="font-semibold text-lg text-neutral-900 mb-1">
+            <h3 className="font-poppins text-lg text-text-main">
               {wine.name}
             </h3>
           </Link>
-          <p className="text-sm text-neutral-600">
-            {wine.grape} - {wine.year}
-          </p>
-        </div>
-        
-        <div className="flex items-center gap-1">
-          <svg
-            className="w-5 h-5 text-yellow-500"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-          </svg>
-          <span className="text-sm font-medium text-neutral-700">
-            {wine.rating.toFixed(1)}
+          <p className="text-sm text-text-muted">{wine.grape}</p>
+          <p className="text-sm text-text-muted">{wine.year}</p>
+
+          <span className="mt-2 bg-gold-300 text-wine-700 px-2 py-1 rounded-full text-xs font-inter w-fit">
+            {wine.type || 'Tinto'}
           </span>
+
+          <div className="flex gap-2 mt-3">
+            <button
+              onClick={() => onEdit(wine)}
+              className="flex-1 border border-wine-700 text-wine-700 bg-transparent hover:bg-wine-700 hover:text-white px-3 py-1.5 rounded-md text-sm font-inter transition-all"
+            >
+              Editar
+            </button>
+            <button
+              onClick={handleDeleteClick}
+              className="flex-1 bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-md text-sm font-inter transition-all"
+            >
+              Excluir
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="space-y-2 mb-4">
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-neutral-600">Regiao</span>
-          <span className="font-medium text-neutral-900">{wine.region}</span>
-        </div>
-        
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-neutral-600">Preco</span>
-          <span className="font-medium text-neutral-900">
-            R$ {wine.price.toFixed(2)}
-          </span>
-        </div>
-        
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-neutral-600">Quantidade</span>
-          <span className={`font-medium ${wine.quantity === 0 ? 'text-red-600' : 'text-neutral-900'}`}>
-            {wine.quantity} {wine.quantity === 1 ? 'garrafa' : 'garrafas'}
-          </span>
-        </div>
-      </div>
-
-      <div className="flex gap-2 pt-4 border-t border-neutral-100">
-        <button
-          onClick={() => onEdit(wine)}
-          className="flex-1 btn-outline text-sm"
-        >
-          Editar
-        </button>
-        <button
-          onClick={handleDeleteClick}
-          className="flex-1 btn-danger text-sm"
-        >
-          Excluir
-        </button>
-      </div>
-    </div>
-
-    <ConfirmDialog
-      isOpen={showConfirm}
-      title="Excluir Vinho"
-      message={`Tem certeza que deseja excluir "${wine.name}"? Esta acao nao pode ser desfeita.`}
-      confirmText="Excluir"
-      cancelText="Cancelar"
-      type="danger"
-      onConfirm={handleConfirmDelete}
-      onCancel={() => setShowConfirm(false)}
-    />
+      <ConfirmDialog
+        isOpen={showConfirm}
+        title="Excluir Vinho"
+        message={`Tem certeza que deseja excluir "${wine.name}"? Esta acao nao pode ser desfeita.`}
+        confirmText="Excluir"
+        cancelText="Cancelar"
+        type="danger"
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setShowConfirm(false)}
+      />
     </>
   )
 }

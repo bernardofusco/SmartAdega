@@ -1,14 +1,14 @@
 import { Outlet } from 'react-router-dom'
-import Header from './Header'
+import Navbar from '../components/Navbar'
 import Toast from '../components/Toast'
 
 const MainLayout = () => {
   return (
-    <div className="min-h-screen bg-neutral-50">
-      <Header />
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-base-bg pb-20">
+      <main className="p-4">
         <Outlet />
       </main>
+      <Navbar />
       <Toast />
     </div>
   )
