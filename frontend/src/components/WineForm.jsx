@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import Input from './Input'
+import Button from './Button'
 
 const wineSchema = z.object({
   name: z.string().min(1, 'Nome e obrigatorio'),
@@ -33,13 +35,9 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <label htmlFor="name" className="label">
-          Nome do Vinho
-        </label>
-        <input
-          id="name"
+        <Input
+          label="Nome do Vinho"
           type="text"
-          className="input"
           placeholder="Ex: Chateau Margaux"
           {...register('name')}
         />
@@ -50,13 +48,9 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="grape" className="label">
-            Uva
-          </label>
-          <input
-            id="grape"
+          <Input
+            label="Uva"
             type="text"
-            className="input"
             placeholder="Ex: Cabernet Sauvignon"
             {...register('grape')}
           />
@@ -66,13 +60,9 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
         </div>
 
         <div>
-          <label htmlFor="region" className="label">
-            Regiao
-          </label>
-          <input
-            id="region"
+          <Input
+            label="Regiao"
             type="text"
-            className="input"
             placeholder="Ex: Bordeaux"
             {...register('region')}
           />
@@ -84,13 +74,9 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label htmlFor="year" className="label">
-            Ano
-          </label>
-          <input
-            id="year"
+          <Input
+            label="Ano"
             type="number"
-            className="input"
             placeholder="2020"
             {...register('year')}
           />
@@ -100,14 +86,10 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
         </div>
 
         <div>
-          <label htmlFor="price" className="label">
-            Preco (R$)
-          </label>
-          <input
-            id="price"
+          <Input
+            label="Preco (R$)"
             type="number"
             step="0.01"
-            className="input"
             placeholder="199.90"
             {...register('price')}
           />
@@ -117,13 +99,9 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
         </div>
 
         <div>
-          <label htmlFor="quantity" className="label">
-            Quantidade
-          </label>
-          <input
-            id="quantity"
+          <Input
+            label="Quantidade"
             type="number"
-            className="input"
             placeholder="6"
             {...register('quantity')}
           />
@@ -134,16 +112,12 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
       </div>
 
       <div>
-        <label htmlFor="rating" className="label">
-          Avaliacao (0 a 5)
-        </label>
-        <input
-          id="rating"
+        <Input
+          label="Avaliacao (0 a 5)"
           type="number"
           step="0.1"
           min="0"
           max="5"
-          className="input"
           placeholder="4.5"
           {...register('rating')}
         />
@@ -153,13 +127,14 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
       </div>
 
       <div className="flex gap-3 pt-4">
-        <button
+        <Button
           type="submit"
+          variant="primary"
           disabled={isLoading}
-          className="btn-primary flex-1"
+          className="flex-1"
         >
           {isLoading ? 'Salvando...' : wine ? 'Atualizar' : 'Criar'}
-        </button>
+        </Button>
       </div>
     </form>
   )

@@ -1,3 +1,5 @@
+import Button from './Button'
+
 const ErrorMessage = ({ message, onRetry }) => {
   return (
     <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
@@ -17,18 +19,18 @@ const ErrorMessage = ({ message, onRetry }) => {
         </svg>
       </div>
       
-      <h3 className="text-xl font-semibold text-neutral-900 mb-2">
+      <h3 className="font-poppins text-xl text-text-main mb-2">
         Algo deu errado
       </h3>
       
-      <p className="text-neutral-600 max-w-md mb-6">
+      <p className="font-inter text-text-muted max-w-md mb-6">
         {message || 'Ocorreu um erro ao carregar os dados. Tente novamente.'}
       </p>
       
       {onRetry && (
-        <button onClick={onRetry} className="btn-primary">
+        <Button onClick={onRetry} variant="primary">
           Tentar novamente
-        </button>
+        </Button>
       )}
     </div>
   )
