@@ -5,6 +5,7 @@ import ConfirmDialog from './ConfirmDialog'
 const WineCard = ({ wine, onEdit, onDelete }) => {
   const [showConfirm, setShowConfirm] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const menuRef = useRef(null)
 
   useEffect(() => {
@@ -38,9 +39,29 @@ const WineCard = ({ wine, onEdit, onDelete }) => {
     setShowConfirm(false)
   }
 
+  const handleCardClick = (e) => {
+    if (
+      e.target.closest('button') ||
+      e.target.closest('a') ||
+      menuRef.current?.contains(e.target)
+    ) {
+      return
+    }
+    setIsOpen(true)
+  }
+
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      setIsOpen(false)
+    }
+  }
+
   return (
     <>
-      <div className="bg-white shadow-soft rounded-lg p-4 relative">
+      <div
+        onClick={handleCardClick}
+        className="bg-white shadow-soft rounded-lg p-4 relative cursor-pointer hover:shadow-md transition-shadow duration-300"
+      >
         <div className="flex gap-4 mb-4">
           <div className="w-16 h-24 bg-base-surface rounded-md flex-shrink-0" />
 
@@ -160,6 +181,92 @@ const WineCard = ({ wine, onEdit, onDelete }) => {
           </div>
         </div>
       </div>
+
+      {isOpen && (
+        <div
+          onClick={handleOverlayClick}
+          className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 p-4 transition-all duration-300"
+        >
+          <div className="bg-white shadow-2xl rounded-lg p-6 relative max-w-2xl w-full max-h-[90vh] overflow-y-auto transition-all duration-300 transform scale-100">
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute top-4 right-4 p-2 hover:bg-base-surface rounded-full transition-colors"
+              aria-label="Fechar"
+            >
+              <svg
+                className="w-6 h-6 text-text-muted"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            <div className="flex gap-6 mb-6">
+              <div className="w-32 h-48 bg-base-surface rounded-md flex-shrink-0" />
+
+              <div className="flex flex-col flex-1">
+                <h3 className="font-poppins text-2xl text-text-main mb-2">
+                  {wine.name}
+                </h3>
+                <p className="text-base text-text-muted font-inter mb-3">
+                  {wine.grape} - {wine.year}
+                </p>
+
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="bg-gold-300 text-wine-700 px-3 py-1 rounded-full text-sm font-inter">
+                    {wine.type || 'Tinto'}
+                  </span>
+                  <div className="flex items-center gap-1 ml-auto">
+                    <svg
+                      className="w-5 h-5 text-yellow-500"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <span className="text-base font-medium text-text-main font-inter">
+                      {wine.rating ? wine.rating.toFixed(1) : '0.0'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mb-6 p-4 bg-base-surface rounded-md">
+              <h4 className="font-poppins text-lg text-text-main mb-3">Descricao</h4>
+              <p className="text-sm text-text-muted font-inter leading-relaxed">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
+            </div>
+
+            <div className="border-t border-base-surface pt-4 space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-base text-text-muted font-inter">Regiao</span>
+                <span className="text-base text-text-main font-inter font-medium">{wine.region}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-base text-text-muted font-inter">Preco</span>
+                <span className="text-base text-text-main font-inter font-medium">
+                  R$ {wine.price ? wine.price.toFixed(2) : '0.00'}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-base text-text-muted font-inter">Quantidade</span>
+                <span className={`text-base font-inter font-medium ${wine.quantity === 0 ? 'text-red-600' : 'text-text-main'}`}>
+                  {wine.quantity || 0} {wine.quantity === 1 ? 'garrafa' : 'garrafas'}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <ConfirmDialog
         isOpen={showConfirm}
