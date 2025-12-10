@@ -5,10 +5,7 @@ const repoName = 'SmartAdega';
 
 export default defineConfig({
     plugins: [react()],
-
-    // Necessário para GitHub Pages
     base: `/${repoName}/`,
-
     server: {
         port: 3000,
         proxy: {
