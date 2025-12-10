@@ -1,17 +1,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-const repoName = 'SmartAdega';
-
 export default defineConfig({
     plugins: [react()],
-    base: `/${repoName}/`,
-    server: {
-        port: 3000,
-        proxy: {
-            '/api': {
-                target: 'http://localhost:3001',
-                changeOrigin: true,
+    base: '/SmartAdega/',
+    build: {
+        outDir: 'dist',
+        assetsDir: 'assets',
+        rollupOptions: {
+            output: {
+                chunkFileNames: 'assets/[name]-[hash].js',
+                entryFileNames: 'assets/[name]-[hash].js',
+                assetFileNames: 'assets/[name]-[hash].[ext]'
             }
         }
     }
