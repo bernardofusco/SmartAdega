@@ -43,6 +43,10 @@ jobs:
           npm run build
           echo "Build finished. Listing files:"
           ls -la
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          VITE_USER_ID: ${{ secrets.VITE_USER_ID }}
+          NODE_ENV: production
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
