@@ -12,7 +12,11 @@ export const wineService = {
   },
 
   create: async (wineData) => {
-    const { data } = await api.post('/wines', wineData)
+    const dataWithUserId = {
+      ...wineData,
+      user_id: import.meta.env.VITE_USER_ID
+    }
+    const { data } = await api.post('/wines', dataWithUserId)
     return data
   },
 
