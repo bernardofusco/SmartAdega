@@ -4,6 +4,7 @@ const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
 const wineRoutes = require('./routes/wineRoutes');
+const recognitionRoutes = require('./routes/recognitionRoutes');
 const errorHandler = require('./middleware/errorHandler');
 const notFound = require('./middleware/notFound');
 
@@ -78,6 +79,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
 }));
 
 app.use('/api', wineRoutes);
+app.use('/api', recognitionRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
