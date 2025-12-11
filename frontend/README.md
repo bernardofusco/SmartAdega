@@ -79,17 +79,81 @@ src/
 
 ## Funcionalidades
 
-- ? Listagem de vinhos
-- ? Detalhes do vinho
-- ? Criar vinho
-- ? Editar vinho
-- ? Excluir vinho
-- ? Validacao de formularios
-- ? Feedback visual (toasts)
-- ? Loading states (skeleton)
-- ? Error handling
-- ? Design responsivo
-- ? PWA ready
+- ✓ Listagem de vinhos
+- ✓ Detalhes do vinho
+- ✓ Criar vinho
+- ✓ Editar vinho
+- ✓ Excluir vinho
+- ✓ Reconhecimento de vinho por imagem
+- ✓ Validacao de formularios
+- ✓ Feedback visual (toasts)
+- ✓ Loading states (skeleton)
+- ✓ Error handling
+- ✓ Design responsivo
+- ✓ PWA ready
+
+## Reconhecimento de Vinho por Imagem
+
+### Fluxo Completo
+
+O sistema permite adicionar vinhos através do reconhecimento de imagem:
+
+#### 1. Upload da Imagem
+- Arraste e solte uma imagem na area de upload
+- Tire uma foto usando a camera
+- Selecione uma imagem da galeria
+
+#### 2. Confirmacao
+- Modal é exibido com preview da imagem
+- Opcoes: "Confirmar Imagem" ou "Enviar Outra Imagem"
+- Tela de fundo fica escurecida (backdrop)
+
+#### 3. Analise
+- API endpoint: `POST /api/recognition/analyze`
+- Envio via multipart/form-data
+- Loading state exibido durante processamento
+
+#### 4. Resultado
+
+**Vinho Reconhecido:**
+- Modal fecha automaticamente
+- Usuario e redirecionado para aba "Manual"
+- Campos sao preenchidos automaticamente:
+  - Nome do vinho
+  - Uva
+  - Regiao
+  - Ano
+  - Preco (se disponivel)
+  - Quantidade (se disponivel)
+  - Avaliacao (se disponivel)
+- Campos permanecem editaveis para ajustes
+- Toast de sucesso e exibido
+
+**Vinho Nao Reconhecido:**
+- Usuario permanece na aba "Upload"
+- Toast de aviso e exibido
+- Possibilidade de tentar outra imagem
+
+### Formato da Resposta da API
+
+```json
+{
+  "nome_do_vinho": "La Gravelliere Cuvee Prestige",
+  "uva": "Cabernet Sauvignon",
+  "regiao": "Graves, Bordeaux",
+  "ano": "2019",
+  "preco": "150.00",
+  "quantidade": "3",
+  "avaliacao": "4.5"
+}
+```
+
+### Componentes Relacionados
+
+- `ModalConfirmImage.jsx` - Modal de confirmacao de imagem
+- `WineForm.jsx` - Formulario com abas (Upload/Link/Manual)
+- `recognitionService.js` - Servico de comunicacao com API
+- `wineRecognitionStore.js` - Estado global do reconhecimento
 
 ## Scripts Disponiveis
 
@@ -107,6 +171,7 @@ O frontend consome os seguintes endpoints:
 - `POST /api/wines` - Criar vinho
 - `PUT /api/wines/:id` - Atualizar vinho
 - `DELETE /api/wines/:id` - Excluir vinho
+- `POST /api/recognition/analyze` - Reconhecer vinho por imagem
 
 ## Autenticacao
 
