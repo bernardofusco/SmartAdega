@@ -63,10 +63,10 @@ const WineDetailPage = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div>
       <Link
         to="/"
-        className="inline-flex items-center text-sm text-neutral-600 hover:text-primary mb-6 transition-colors"
+        className="inline-flex items-center text-sm text-text-muted hover:text-wine-700 mb-6 transition-colors font-inter"
       >
         <svg
           className="w-4 h-4 mr-2"
@@ -84,20 +84,20 @@ const WineDetailPage = () => {
         Voltar
       </Link>
 
-      <div className="card p-8">
+      <div className="bg-white shadow-soft rounded-lg p-6">
         <div className="flex items-start justify-between mb-6">
           <div className="flex-1">
-            <h1 className="text-3xl font-bold text-neutral-900 mb-2">
+            <h1 className="font-poppins text-2xl text-text-main mb-2">
               {wine.name}
             </h1>
-            <div className="flex items-center gap-4 text-neutral-600">
+            <div className="flex items-center gap-3 text-text-muted text-sm font-inter">
               <span>{wine.grape}</span>
-              <span>-</span>
+              <span>•</span>
               <span>{wine.year}</span>
-              <span>-</span>
+              <span>•</span>
               <div className="flex items-center gap-1">
                 <svg
-                  className="w-5 h-5 text-yellow-500"
+                  className="w-4 h-4 text-yellow-500"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -111,13 +111,13 @@ const WineDetailPage = () => {
           <div className="flex gap-2">
             <button
               onClick={() => navigate(`/?edit=${wine.id}`)}
-              className="btn-outline"
+              className="border border-wine-700 text-wine-700 bg-transparent hover:bg-wine-700 hover:text-white px-4 py-2 rounded-md text-sm font-inter transition-all"
             >
               Editar
             </button>
             <button
               onClick={() => setShowConfirm(true)}
-              className="btn-danger"
+              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-inter transition-all"
               disabled={deleteWine.isPending}
             >
               {deleteWine.isPending ? 'Excluindo...' : 'Excluir'}
@@ -125,35 +125,35 @@ const WineDetailPage = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="p-6 bg-neutral-50 rounded-xl">
-            <div className="text-sm text-neutral-600 mb-1">Regiao</div>
-            <div className="text-xl font-semibold text-neutral-900">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="p-4 bg-base-surface rounded-md">
+            <div className="text-sm text-text-muted mb-1 font-inter">Regiao</div>
+            <div className="text-lg font-poppins text-text-main">
               {wine.region}
             </div>
           </div>
 
-          <div className="p-6 bg-neutral-50 rounded-xl">
-            <div className="text-sm text-neutral-600 mb-1">Preco</div>
-            <div className="text-xl font-semibold text-neutral-900">
+          <div className="p-4 bg-base-surface rounded-md">
+            <div className="text-sm text-text-muted mb-1 font-inter">Preco</div>
+            <div className="text-lg font-poppins text-text-main">
               R$ {wine.price.toFixed(2)}
             </div>
           </div>
 
-          <div className="p-6 bg-neutral-50 rounded-xl">
-            <div className="text-sm text-neutral-600 mb-1">Quantidade</div>
-            <div className={`text-xl font-semibold ${wine.quantity === 0 ? 'text-red-600' : 'text-neutral-900'}`}>
+          <div className="p-4 bg-base-surface rounded-md">
+            <div className="text-sm text-text-muted mb-1 font-inter">Quantidade</div>
+            <div className={`text-lg font-poppins ${wine.quantity === 0 ? 'text-red-600' : 'text-text-main'}`}>
               {wine.quantity} {wine.quantity === 1 ? 'garrafa' : 'garrafas'}
             </div>
           </div>
 
-          <div className="p-6 bg-neutral-50 rounded-xl">
-            <div className="text-sm text-neutral-600 mb-1">Avaliacao</div>
+          <div className="p-4 bg-base-surface rounded-md">
+            <div className="text-sm text-text-muted mb-1 font-inter">Avaliacao</div>
             <div className="flex items-center gap-2">
-              <div className="text-xl font-semibold text-neutral-900">
+              <div className="text-lg font-poppins text-text-main">
                 {wine.rating.toFixed(1)}
               </div>
-              <div className="text-neutral-500">/ 5.0</div>
+              <div className="text-text-muted text-sm">/ 5.0</div>
             </div>
           </div>
         </div>

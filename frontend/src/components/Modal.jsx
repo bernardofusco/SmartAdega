@@ -9,14 +9,14 @@ const Modal = ({ isOpen, onClose, title, children }) => {
           onClick={onClose}
         />
         
-        <div className="relative bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-          <div className="sticky top-0 bg-white border-b border-neutral-200 px-6 py-4 flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-neutral-900">
+        <div className="relative bg-white rounded-lg shadow-soft max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="sticky top-0 bg-white border-b border-gold-300 px-6 py-4 flex items-center justify-between">
+            <h2 className="font-poppins text-xl text-text-main">
               {title}
             </h2>
             <button
               onClick={onClose}
-              className="text-neutral-400 hover:text-neutral-600 transition-colors"
+              className="text-text-muted hover:text-wine-700 transition-colors"
             >
               <svg
                 className="w-6 h-6"

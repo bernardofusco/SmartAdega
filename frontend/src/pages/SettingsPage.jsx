@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useUserStore } from '../stores/userStore'
 import { useToastStore } from '../stores/toastStore'
+import Input from '../components/Input'
+import Button from '../components/Button'
 
 const SettingsPage = () => {
   const { userId, setUserId } = useUserStore()
@@ -17,49 +19,42 @@ const SettingsPage = () => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold text-neutral-900 mb-2">
-        Configuracoes
+    <div>
+      <h1 className="font-poppins text-2xl text-wine-700 mb-6">
+        Configurações
       </h1>
-      <p className="text-neutral-600 mb-8">
-        Gerencie as configuracoes da sua conta
-      </p>
 
-      <div className="card p-6">
-        <h2 className="text-xl font-semibold text-neutral-900 mb-4">
+      <div className="bg-white shadow-soft rounded-lg p-6 mb-4">
+        <h2 className="font-poppins text-lg text-text-main mb-4">
           Identificacao de Usuario
         </h2>
         
         <div className="mb-4">
-          <label htmlFor="userId" className="label">
-            ID do Usuario
-          </label>
-          <input
-            id="userId"
+          <Input
+            label="ID do Usuario"
             type="text"
-            className="input"
             placeholder="Digite seu ID de usuario"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
-          <p className="text-sm text-neutral-500 mt-2">
+          <p className="text-sm text-text-muted mt-2">
             Este ID e usado para identificar seus vinhos na API
           </p>
         </div>
 
-        <button onClick={handleSave} className="btn-primary">
+        <Button onClick={handleSave} variant="primary">
           Salvar Configuracoes
-        </button>
+        </Button>
       </div>
 
-      <div className="card p-6 mt-6">
-        <h2 className="text-xl font-semibold text-neutral-900 mb-4">
+      <div className="bg-white shadow-soft rounded-lg p-6">
+        <h2 className="font-poppins text-lg text-text-main mb-4">
           Sobre o SmartAdega
         </h2>
-        <p className="text-neutral-600 mb-2">
+        <p className="text-text-muted mb-2">
           Versao: 1.0.0
         </p>
-        <p className="text-neutral-600">
+        <p className="text-text-muted">
           Sistema de gerenciamento de colecao de vinhos
         </p>
       </div>
