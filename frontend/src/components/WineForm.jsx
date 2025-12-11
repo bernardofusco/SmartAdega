@@ -312,7 +312,7 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-text-main text-sm font-inter font-medium mb-2 block">
+              <label className="text-text-main dark:text-dark-text-primary text-sm font-inter font-medium mb-2 block">
                 Uva
               </label>
               <input
@@ -320,18 +320,19 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
                 {...register('grape')}
                 placeholder={formValues.grape ? '' : 'Ex: Cabernet Sauvignon'}
                 className={`
-                  w-full bg-white border rounded-md h-11 px-3
-                  text-gray-900 font-inter
+                  w-full bg-white dark:bg-dark-surface-secondary border rounded-md h-11 px-3
+                  text-gray-900 dark:text-dark-text-primary font-inter
+                  placeholder:text-gray-400 dark:placeholder:text-dark-text-muted
                   focus:outline-none focus:ring-2
                   transition-all
                   ${errors.grape 
-                    ? 'border-red-500 focus:border-red-600 focus:ring-red-500/20' 
-                    : 'border-gray-300 focus:border-wine-700 focus:ring-wine-700/20'
+                    ? 'border-red-500 dark:border-red-600 focus:border-red-600 focus:ring-red-500/20 dark:focus:ring-red-400/30' 
+                    : 'border-gray-300 dark:border-dark-surface-border focus:border-wine-700 dark:focus:border-dark-wine-primary focus:ring-wine-700/20 dark:focus:ring-dark-wine-primary/30'
                   }
                 `}
               />
               {errors.grape && (
-                <p className="text-red-600 text-xs mt-1.5 font-inter flex items-center gap-1">
+                <p className="text-red-600 dark:text-red-400 text-xs mt-1.5 font-inter flex items-center gap-1">
                   <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
@@ -341,7 +342,7 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
             </div>
 
             <div>
-              <label className="text-text-main text-sm font-inter font-medium mb-2 block">
+              <label className="text-text-main dark:text-dark-text-primary text-sm font-inter font-medium mb-2 block">
                 Regiao
               </label>
               <input
@@ -349,18 +350,19 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
                 {...register('region')}
                 placeholder={formValues.region ? '' : 'Ex: Bordeaux, Franca'}
                 className={`
-                  w-full bg-white border rounded-md h-11 px-3
-                  text-gray-900 font-inter
+                  w-full bg-white dark:bg-dark-surface-secondary border rounded-md h-11 px-3
+                  text-gray-900 dark:text-dark-text-primary font-inter
+                  placeholder:text-gray-400 dark:placeholder:text-dark-text-muted
                   focus:outline-none focus:ring-2
                   transition-all
                   ${errors.region 
-                    ? 'border-red-500 focus:border-red-600 focus:ring-red-500/20' 
-                    : 'border-gray-300 focus:border-wine-700 focus:ring-wine-700/20'
+                    ? 'border-red-500 dark:border-red-600 focus:border-red-600 focus:ring-red-500/20 dark:focus:ring-red-400/30' 
+                    : 'border-gray-300 dark:border-dark-surface-border focus:border-wine-700 dark:focus:border-dark-wine-primary focus:ring-wine-700/20 dark:focus:ring-dark-wine-primary/30'
                   }
                 `}
               />
               {errors.region && (
-                <p className="text-red-600 text-xs mt-1.5 font-inter flex items-center gap-1">
+                <p className="text-red-600 dark:text-red-400 text-xs mt-1.5 font-inter flex items-center gap-1">
                   <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
@@ -380,18 +382,19 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
                 {...register('year')}
                 placeholder={formValues.year ? '' : 'Ex: 2019'}
                 className={`
-                  w-full bg-white border rounded-md h-11 px-3
-                  text-gray-900 font-inter
+                  w-full bg-white dark:bg-dark-surface-secondary border rounded-md h-11 px-3
+                  text-gray-900 dark:text-dark-text-primary font-inter
+                  placeholder:text-gray-400 dark:placeholder:text-dark-text-muted
                   focus:outline-none focus:ring-2
                   transition-all
                   ${errors.year 
-                    ? 'border-red-500 focus:border-red-600 focus:ring-red-500/20' 
-                    : 'border-gray-300 focus:border-wine-700 focus:ring-wine-700/20'
+                    ? 'border-red-500 dark:border-red-600 focus:border-red-600 focus:ring-red-500/20 dark:focus:ring-red-400/30' 
+                    : 'border-gray-300 dark:border-dark-surface-border focus:border-wine-700 dark:focus:border-dark-wine-primary focus:ring-wine-700/20 dark:focus:ring-dark-wine-primary/30'
                   }
                 `}
               />
               {errors.year && (
-                <p className="text-red-600 text-xs mt-1.5 font-inter flex items-center gap-1">
+                <p className="text-red-600 dark:text-red-400 text-xs mt-1.5 font-inter flex items-center gap-1">
                   <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
@@ -401,7 +404,7 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
             </div>
 
             <div>
-              <label className="text-text-main text-sm font-inter font-medium mb-2 block">
+              <label className="text-text-main dark:text-dark-text-primary text-sm font-inter font-medium mb-2 block">
                 Preco (R$)
               </label>
               <input
@@ -410,18 +413,19 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
                 {...register('price')}
                 placeholder={formValues.price ? '' : 'Ex: 199.90'}
                 className={`
-                  w-full bg-white border rounded-md h-11 px-3
-                  text-gray-900 font-inter
+                  w-full bg-white dark:bg-dark-surface-secondary border rounded-md h-11 px-3
+                  text-gray-900 dark:text-dark-text-primary font-inter
+                  placeholder:text-gray-400 dark:placeholder:text-dark-text-muted
                   focus:outline-none focus:ring-2
                   transition-all
                   ${errors.price 
-                    ? 'border-red-500 focus:border-red-600 focus:ring-red-500/20' 
-                    : 'border-gray-300 focus:border-wine-700 focus:ring-wine-700/20'
+                    ? 'border-red-500 dark:border-red-600 focus:border-red-600 focus:ring-red-500/20 dark:focus:ring-red-400/30' 
+                    : 'border-gray-300 dark:border-dark-surface-border focus:border-wine-700 dark:focus:border-dark-wine-primary focus:ring-wine-700/20 dark:focus:ring-dark-wine-primary/30'
                   }
                 `}
               />
               {errors.price && (
-                <p className="text-red-600 text-xs mt-1.5 font-inter flex items-center gap-1">
+                <p className="text-red-600 dark:text-red-400 text-xs mt-1.5 font-inter flex items-center gap-1">
                   <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
@@ -439,18 +443,19 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
                 {...register('quantity')}
                 placeholder={formValues.quantity ? '' : 'Ex: 6'}
                 className={`
-                  w-full bg-white border rounded-md h-11 px-3
-                  text-gray-900 font-inter
+                  w-full bg-white dark:bg-dark-surface-secondary border rounded-md h-11 px-3
+                  text-gray-900 dark:text-dark-text-primary font-inter
+                  placeholder:text-gray-400 dark:placeholder:text-dark-text-muted
                   focus:outline-none focus:ring-2
                   transition-all
                   ${errors.quantity 
-                    ? 'border-red-500 focus:border-red-600 focus:ring-red-500/20' 
-                    : 'border-gray-300 focus:border-wine-700 focus:ring-wine-700/20'
+                    ? 'border-red-500 dark:border-red-600 focus:border-red-600 focus:ring-red-500/20 dark:focus:ring-red-400/30' 
+                    : 'border-gray-300 dark:border-dark-surface-border focus:border-wine-700 dark:focus:border-dark-wine-primary focus:ring-wine-700/20 dark:focus:ring-dark-wine-primary/30'
                   }
                 `}
               />
               {errors.quantity && (
-                <p className="text-red-600 text-xs mt-1.5 font-inter flex items-center gap-1">
+                <p className="text-red-600 dark:text-red-400 text-xs mt-1.5 font-inter flex items-center gap-1">
                   <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
@@ -461,7 +466,7 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
           </div>
 
           <div>
-            <label className="text-text-main text-sm font-inter font-medium mb-2 block">
+            <label className="text-text-main dark:text-dark-text-primary text-sm font-inter font-medium mb-2 block">
               Avaliacao (0 a 5)
             </label>
             <input
@@ -472,18 +477,19 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
               {...register('rating')}
               placeholder={formValues.rating ? '' : 'Ex: 4.5'}
               className={`
-                w-full bg-white border rounded-md h-11 px-3
-                text-gray-900 font-inter
+                w-full bg-white dark:bg-dark-surface-secondary border rounded-md h-11 px-3
+                text-gray-900 dark:text-dark-text-primary font-inter
+                placeholder:text-gray-400 dark:placeholder:text-dark-text-muted
                 focus:outline-none focus:ring-2
                 transition-all
                 ${errors.rating 
-                  ? 'border-red-500 focus:border-red-600 focus:ring-red-500/20' 
-                  : 'border-gray-300 focus:border-wine-700 focus:ring-wine-700/20'
+                  ? 'border-red-500 dark:border-red-600 focus:border-red-600 focus:ring-red-500/20 dark:focus:ring-red-400/30' 
+                  : 'border-gray-300 dark:border-dark-surface-border focus:border-wine-700 dark:focus:border-dark-wine-primary focus:ring-wine-700/20 dark:focus:ring-dark-wine-primary/30'
                 }
               `}
             />
             {errors.rating && (
-              <p className="text-red-600 text-xs mt-1.5 font-inter flex items-center gap-1">
+              <p className="text-red-600 dark:text-red-400 text-xs mt-1.5 font-inter flex items-center gap-1">
                 <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                 </svg>
