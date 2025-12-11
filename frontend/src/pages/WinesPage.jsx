@@ -90,7 +90,10 @@ const WinesPage = () => {
       }
       handleCloseModal()
     } catch (error) {
-      addToast(error.message || 'Erro ao salvar vinho', 'error')
+      console.error('Erro ao salvar vinho:', error)
+      const errorMessage = error.message || error.response?.data?.error || error.response?.data?.message || 'Erro ao salvar vinho'
+      addToast(errorMessage, 'error')
+      throw error
     }
   }
 
