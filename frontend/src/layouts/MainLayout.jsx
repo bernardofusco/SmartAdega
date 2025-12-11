@@ -4,7 +4,7 @@ import Toast from '../components/Toast'
 
 const MainLayout = () => {
   return (
-    <div className="min-h-screen bg-base-bg pb-20">
+    <div className="min-h-screen bg-base-bg dark:bg-dark-bg-primary pb-20 transition-colors">
       <main className="p-4">
         <Outlet />
       </main>

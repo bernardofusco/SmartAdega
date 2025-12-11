@@ -7,13 +7,13 @@ const Skeleton = ({ className = '', variant = 'text' }) => {
     circle: 'h-12 w-12 rounded-full'
   }
 
-  return <div className={`animate-pulse bg-base-surface rounded ${variants[variant]} ${className}`} />
+  return <div className={`animate-pulse bg-base-surface dark:bg-dark-surface-secondary rounded ${variants[variant]} ${className}`} />
 }
 
 export const WineCardSkeleton = () => {
   return (
-    <div className="bg-white shadow-soft rounded-lg p-4 flex gap-4">
-      <div className="w-16 h-24 bg-base-surface rounded-md animate-pulse" />
+    <div className="bg-white dark:bg-dark-surface-primary shadow-soft dark:shadow-dark-card rounded-lg p-4 flex gap-4 dark:border dark:border-dark-surface-border">
+      <div className="w-16 h-24 bg-base-surface dark:bg-dark-surface-secondary rounded-md animate-pulse" />
       <div className="flex-1 flex flex-col gap-2">
         <Skeleton variant="title" className="mb-2" />
         <Skeleton variant="text" className="w-1/2" />

@@ -8,6 +8,24 @@
     <meta name="description" content="SmartAdega - Gerencie sua colecao de vinhos" />
     <link rel="manifest" href="/manifest.json" />
     <title>SmartAdega</title>
+    <!-- Dark Mode Script - Executa antes do carregamento da página para evitar flash -->
+    <script>
+      (function() {
+        // Detecta se o usuário tem preferência por dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.classList.add('dark');
+        }
+        
+        // Escuta mudanças na preferência do sistema
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+          if (e.matches) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        });
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

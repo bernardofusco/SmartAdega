@@ -5,18 +5,18 @@ const Modal = ({ isOpen, onClose, title, children }) => {
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex min-h-screen items-center justify-center p-4">
         <div
-          className="fixed inset-0 bg-black/50 transition-opacity"
+          className="fixed inset-0 bg-black/50 dark:bg-black/70 transition-opacity"
           onClick={onClose}
         />
         
-        <div className="relative bg-white rounded-lg shadow-soft max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-          <div className="sticky top-0 bg-white border-b border-gold-300 px-6 py-4 flex items-center justify-between">
-            <h2 className="font-poppins text-xl text-text-main">
+        <div className="relative bg-white dark:bg-dark-surface-elevated rounded-lg shadow-soft dark:shadow-dark-card max-w-2xl w-full max-h-[90vh] overflow-y-auto dark:border dark:border-dark-surface-border">
+          <div className="sticky top-0 bg-white dark:bg-dark-surface-elevated border-b border-gold-300 dark:border-dark-surface-border px-6 py-4 flex items-center justify-between">
+            <h2 className="font-poppins text-xl text-text-main dark:text-dark-text-primary">
               {title}
             </h2>
             <button
               onClick={onClose}
-              className="text-text-muted hover:text-wine-700 transition-colors"
+              className="text-text-muted dark:text-dark-text-muted hover:text-wine-700 dark:hover:text-dark-wine-primary transition-colors"
             >
               <svg
                 className="w-6 h-6"

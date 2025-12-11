@@ -231,7 +231,7 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
         isLoading={isAnalyzing}
       />
       
-      <div className="flex border-b border-gray-200 mb-6">
+      <div className="flex border-b border-gray-200 dark:border-dark-surface-border mb-6">
         {tabs.map((tab) => (
           <button
             key={tab.id}
@@ -239,8 +239,8 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
             onClick={() => setActiveTab(tab.id)}
             className={`px-6 py-3 font-inter font-medium transition-colors relative ${
               activeTab === tab.id
-                ? 'text-wine-700 border-b-2 border-wine-700'
-                : 'text-text-muted hover:text-text-main'
+                ? 'text-wine-700 dark:text-dark-wine-primary border-b-2 border-wine-700 dark:border-dark-wine-primary'
+                : 'text-text-muted dark:text-dark-text-muted hover:text-text-main dark:hover:text-dark-text-primary'
             }`}
           >
             {tab.label}
@@ -251,7 +251,7 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
       {activeTab === 'manual' && (
         <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
           {globalError && (
-            <div className="bg-red-100 border border-red-300 text-red-700 py-3 px-4 rounded-md mb-4">
+            <div className="bg-red-100 dark:bg-red-950/30 border border-red-300 dark:border-red-800 text-red-700 dark:text-red-300 py-3 px-4 rounded-md mb-4">
               <div className="flex items-start gap-2">
                 <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
@@ -266,7 +266,7 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
           )}
 
           {Object.keys(errors).length > 0 && !globalError && (
-            <div className="bg-red-50 border border-red-300 text-red-700 py-3 px-4 rounded-md mb-4">
+            <div className="bg-red-50 dark:bg-red-950/20 border border-red-300 dark:border-red-800 text-red-700 dark:text-red-300 py-3 px-4 rounded-md mb-4">
               <div className="flex items-start gap-2">
                 <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
@@ -281,21 +281,22 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
           )}
 
           <div>
-            <label className="text-text-main text-sm font-inter font-medium mb-2 block">
-              Nome do Vinho <span className="text-red-600">*</span>
+            <label className="text-text-main dark:text-dark-text-primary text-sm font-inter font-medium mb-2 block">
+              Nome do Vinho <span className="text-red-600 dark:text-red-400">*</span>
             </label>
             <input
               type="text"
               {...register('name')}
               placeholder={formValues.name ? '' : 'Ex: Chateau Margaux'}
               className={`
-                w-full bg-white border rounded-md h-11 px-3
-                text-gray-900 font-inter
+                w-full bg-white dark:bg-dark-surface-secondary border rounded-md h-11 px-3
+                text-gray-900 dark:text-dark-text-primary font-inter
+                placeholder:text-gray-400 dark:placeholder:text-dark-text-muted
                 focus:outline-none focus:ring-2
                 transition-all
                 ${errors.name 
-                  ? 'border-red-500 focus:border-red-600 focus:ring-red-500/20' 
-                  : 'border-gray-300 focus:border-wine-700 focus:ring-wine-700/20'
+                  ? 'border-red-500 dark:border-red-600 focus:border-red-600 focus:ring-red-500/20 dark:focus:ring-red-400/30' 
+                  : 'border-gray-300 dark:border-dark-surface-border focus:border-wine-700 dark:focus:border-dark-wine-primary focus:ring-wine-700/20 dark:focus:ring-dark-wine-primary/30'
                 }
               `}
             />

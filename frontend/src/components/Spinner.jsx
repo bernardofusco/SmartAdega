@@ -9,7 +9,7 @@ const Spinner = ({ size = 'md', className = '' }) => {
   return (
     <div className={`inline-block ${sizes[size]} ${className}`}>
       <svg
-        className="animate-spin text-primary"
+        className="animate-spin text-wine-700 dark:text-dark-wine-primary"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -36,7 +36,7 @@ export const LoadingPage = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-[400px]">
       <Spinner size="lg" />
-      <p className="mt-4 text-neutral-600">Carregando...</p>
+      <p className="mt-4 text-text-muted dark:text-dark-text-muted">Carregando...</p>
     </div>
   )
 }
