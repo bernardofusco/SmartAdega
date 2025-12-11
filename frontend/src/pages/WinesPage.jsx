@@ -109,10 +109,10 @@ const WinesPage = () => {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="font-poppins text-2xl text-wine-700 mb-1">
+        <h1 className="font-poppins text-2xl text-wine-700 dark:text-dark-wine-primary mb-1">
           Minha Adega
         </h1>
-        <p className="text-sm text-text-muted font-inter">
+        <p className="text-sm text-text-muted dark:text-dark-text-muted font-inter">
           {wines?.length || 0} {wines?.length === 1 ? 'vinho cadastrado' : 'vinhos cadastrados'}
         </p>
       </div>
@@ -122,7 +122,7 @@ const WinesPage = () => {
         
         <button
           onClick={() => handleOpenModal()}
-          className="bg-wine-700 text-white hover:bg-wine-500 px-4 py-2 h-11 rounded-md font-inter font-medium transition-all flex items-center gap-2"
+          className="bg-wine-700 text-white hover:bg-wine-500 dark:bg-dark-wine-primary dark:hover:bg-dark-wine-secondary px-4 py-2 h-11 rounded-md font-inter font-medium transition-all flex items-center gap-2"
         >
           <svg
             className="w-5 h-5"

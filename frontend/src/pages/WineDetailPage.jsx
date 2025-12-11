@@ -66,7 +66,7 @@ const WineDetailPage = () => {
     <div>
       <Link
         to="/"
-        className="inline-flex items-center text-sm text-text-muted hover:text-wine-700 mb-6 transition-colors font-inter"
+        className="inline-flex items-center text-sm text-text-muted dark:text-dark-text-muted hover:text-wine-700 dark:hover:text-dark-wine-primary mb-6 transition-colors font-inter"
       >
         <svg
           className="w-4 h-4 mr-2"
@@ -84,13 +84,13 @@ const WineDetailPage = () => {
         Voltar
       </Link>
 
-      <div className="bg-white shadow-soft rounded-lg p-6">
+      <div className="bg-white dark:bg-dark-surface-primary shadow-soft dark:shadow-dark-card rounded-lg p-6 dark:border dark:border-dark-surface-border">
         <div className="flex items-start justify-between mb-6">
           <div className="flex-1">
-            <h1 className="font-poppins text-2xl text-text-main mb-2">
+            <h1 className="font-poppins text-2xl text-text-main dark:text-dark-text-primary mb-2">
               {wine.name}
             </h1>
-            <div className="flex items-center gap-3 text-text-muted text-sm font-inter">
+            <div className="flex items-center gap-3 text-text-muted dark:text-dark-text-muted text-sm font-inter">
               <span>{wine.grape}</span>
               <span>•</span>
               <span>{wine.year}</span>
@@ -111,13 +111,13 @@ const WineDetailPage = () => {
           <div className="flex gap-2">
             <button
               onClick={() => navigate(`/?edit=${wine.id}`)}
-              className="border border-wine-700 text-wine-700 bg-transparent hover:bg-wine-700 hover:text-white px-4 py-2 rounded-md text-sm font-inter transition-all"
+              className="border border-wine-700 dark:border-dark-wine-primary text-wine-700 dark:text-dark-wine-primary bg-transparent hover:bg-wine-700 hover:text-white dark:hover:bg-dark-wine-primary px-4 py-2 rounded-md text-sm font-inter transition-all"
             >
               Editar
             </button>
             <button
               onClick={() => setShowConfirm(true)}
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-inter transition-all"
+              className="bg-red-600 dark:bg-red-500 hover:bg-red-700 dark:hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-inter transition-all"
               disabled={deleteWine.isPending}
             >
               {deleteWine.isPending ? 'Excluindo...' : 'Excluir'}
@@ -126,34 +126,34 @@ const WineDetailPage = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-4 bg-base-surface rounded-md">
-            <div className="text-sm text-text-muted mb-1 font-inter">Regiao</div>
-            <div className="text-lg font-poppins text-text-main">
+          <div className="p-4 bg-base-surface dark:bg-dark-surface-secondary rounded-md dark:border dark:border-dark-surface-border">
+            <div className="text-sm text-text-muted dark:text-dark-text-muted mb-1 font-inter">Regiao</div>
+            <div className="text-lg font-poppins text-text-main dark:text-dark-text-primary">
               {wine.region}
             </div>
           </div>
 
-          <div className="p-4 bg-base-surface rounded-md">
-            <div className="text-sm text-text-muted mb-1 font-inter">Preco</div>
-            <div className="text-lg font-poppins text-text-main">
+          <div className="p-4 bg-base-surface dark:bg-dark-surface-secondary rounded-md dark:border dark:border-dark-surface-border">
+            <div className="text-sm text-text-muted dark:text-dark-text-muted mb-1 font-inter">Preco</div>
+            <div className="text-lg font-poppins text-text-main dark:text-dark-text-primary">
               R$ {wine.price.toFixed(2)}
             </div>
           </div>
 
-          <div className="p-4 bg-base-surface rounded-md">
-            <div className="text-sm text-text-muted mb-1 font-inter">Quantidade</div>
-            <div className={`text-lg font-poppins ${wine.quantity === 0 ? 'text-red-600' : 'text-text-main'}`}>
+          <div className="p-4 bg-base-surface dark:bg-dark-surface-secondary rounded-md dark:border dark:border-dark-surface-border">
+            <div className="text-sm text-text-muted dark:text-dark-text-muted mb-1 font-inter">Quantidade</div>
+            <div className={`text-lg font-poppins ${wine.quantity === 0 ? 'text-red-600 dark:text-red-400' : 'text-text-main dark:text-dark-text-primary'}`}>
               {wine.quantity} {wine.quantity === 1 ? 'garrafa' : 'garrafas'}
             </div>
           </div>
 
-          <div className="p-4 bg-base-surface rounded-md">
-            <div className="text-sm text-text-muted mb-1 font-inter">Avaliacao</div>
+          <div className="p-4 bg-base-surface dark:bg-dark-surface-secondary rounded-md dark:border dark:border-dark-surface-border">
+            <div className="text-sm text-text-muted dark:text-dark-text-muted mb-1 font-inter">Avaliacao</div>
             <div className="flex items-center gap-2">
-              <div className="text-lg font-poppins text-text-main">
+              <div className="text-lg font-poppins text-text-main dark:text-dark-text-primary">
                 {wine.rating.toFixed(1)}
               </div>
-              <div className="text-text-muted text-sm">/ 5.0</div>
+              <div className="text-text-muted dark:text-dark-text-muted text-sm">/ 5.0</div>
             </div>
           </div>
         </div>

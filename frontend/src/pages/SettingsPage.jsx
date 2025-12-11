@@ -20,12 +20,12 @@ const SettingsPage = () => {
 
   return (
     <div>
-      <h1 className="font-poppins text-2xl text-wine-700 mb-6">
+      <h1 className="font-poppins text-2xl text-wine-700 dark:text-dark-wine-primary mb-6">
         Configurações
       </h1>
 
-      <div className="bg-white shadow-soft rounded-lg p-6 mb-4">
-        <h2 className="font-poppins text-lg text-text-main mb-4">
+      <div className="bg-white dark:bg-dark-surface-primary shadow-soft dark:shadow-dark-card rounded-lg p-6 mb-4 dark:border dark:border-dark-surface-border">
+        <h2 className="font-poppins text-lg text-text-main dark:text-dark-text-primary mb-4">
           Identificacao de Usuario
         </h2>
         
@@ -37,7 +37,7 @@ const SettingsPage = () => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
-          <p className="text-sm text-text-muted mt-2">
+          <p className="text-sm text-text-muted dark:text-dark-text-muted mt-2">
             Este ID e usado para identificar seus vinhos na API
           </p>
         </div>
@@ -47,14 +47,14 @@ const SettingsPage = () => {
         </Button>
       </div>
 
-      <div className="bg-white shadow-soft rounded-lg p-6">
-        <h2 className="font-poppins text-lg text-text-main mb-4">
+      <div className="bg-white dark:bg-dark-surface-primary shadow-soft dark:shadow-dark-card rounded-lg p-6 dark:border dark:border-dark-surface-border">
+        <h2 className="font-poppins text-lg text-text-main dark:text-dark-text-primary mb-4">
           Sobre o SmartAdega
         </h2>
-        <p className="text-text-muted mb-2">
+        <p className="text-text-muted dark:text-dark-text-muted mb-2">
           Versao: 1.0.0
         </p>
-        <p className="text-text-muted">
+        <p className="text-text-muted dark:text-dark-text-muted">
           Sistema de gerenciamento de colecao de vinhos
         </p>
       </div>

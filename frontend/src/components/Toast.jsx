@@ -9,13 +9,13 @@ const Toast = () => {
   const getToastStyles = (type) => {
     switch (type) {
       case 'success':
-        return 'bg-green-50 border-green-500 text-green-800'
+        return 'bg-green-50 dark:bg-green-950/30 border-green-500 dark:border-green-600 text-green-800 dark:text-green-300'
       case 'error':
-        return 'bg-red-50 border-red-500 text-red-800'
+        return 'bg-red-50 dark:bg-red-950/30 border-red-500 dark:border-red-600 text-red-800 dark:text-red-300'
       case 'warning':
-        return 'bg-yellow-50 border-yellow-500 text-yellow-800'
+        return 'bg-yellow-50 dark:bg-yellow-950/30 border-yellow-500 dark:border-yellow-600 text-yellow-800 dark:text-yellow-300'
       default:
-        return 'bg-blue-50 border-blue-500 text-blue-800'
+        return 'bg-blue-50 dark:bg-blue-950/30 border-blue-500 dark:border-blue-600 text-blue-800 dark:text-blue-300'
     }
   }
 

@@ -3,9 +3,9 @@ import Button from './Button'
 const ErrorMessage = ({ message, onRetry }) => {
   return (
     <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
-      <div className="w-24 h-24 mb-6 rounded-full bg-red-50 flex items-center justify-center">
+      <div className="w-24 h-24 mb-6 rounded-full bg-red-50 dark:bg-red-950/30 flex items-center justify-center">
         <svg
-          className="w-12 h-12 text-red-500"
+          className="w-12 h-12 text-red-500 dark:text-red-400"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -19,11 +19,11 @@ const ErrorMessage = ({ message, onRetry }) => {
         </svg>
       </div>
       
-      <h3 className="font-poppins text-xl text-text-main mb-2">
+      <h3 className="font-poppins text-xl text-text-main dark:text-dark-text-primary mb-2">
         Algo deu errado
       </h3>
       
-      <p className="font-inter text-text-muted max-w-md mb-6">
+      <p className="font-inter text-text-muted dark:text-dark-text-muted max-w-md mb-6">
         {message || 'Ocorreu um erro ao carregar os dados. Tente novamente.'}
       </p>
       
