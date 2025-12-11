@@ -1,5 +1,29 @@
 const swaggerJsdoc = require('swagger-jsdoc');
 
+const getServers = () => {
+  const isProduction = process.env.NODE_ENV === 'production';
+  
+  if (isProduction) {
+    return [
+      {
+        url: process.env.BASE_URL || 'https://smartadega.onrender.com',
+        description: 'Producao'
+      }
+    ];
+  }
+
+  return [
+    {
+      url: process.env.BASE_URL || 'http://localhost:3000',
+      description: 'Local'
+    },
+    {
+      url: 'https://smartadega.onrender.com',
+      description: 'Producao'
+    }
+  ];
+};
+
 const options = {
   definition: {
     openapi: '3.0.0',
@@ -20,14 +44,13 @@ const options = {
       {
         name: 'Wines',
         description: 'Gestao de vinhos'
-      }
-    ],
-    servers: [
+      },
       {
-        url: 'https://smartadega.onrender.com',
-        description: 'Servidor de Desenvolvimento'
+        name: 'Recognition',
+        description: 'Reconhecimento de vinhos por imagem'
       }
     ],
+    servers: getServers(),
     components: {
       securitySchemes: {
         UserIdHeader: {
