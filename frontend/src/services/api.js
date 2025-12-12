@@ -24,7 +24,6 @@ api.interceptors.response.use(
   (error) => {
     // Se receber 401, limpar autenticação
     if (error.response?.status === 401) {
-      const message = error.response?.data?.error || ''
       // Evitar redirect em loop
       if (!window.location.hash.includes('/login')) {
         useAuthStore.getState().clearAuth()

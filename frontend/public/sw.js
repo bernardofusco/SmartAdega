@@ -17,7 +17,7 @@ self.addEventListener('activate', (event) => {
   )
 })
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', () => {
   // Não intercepta requests - deixa o browser lidar com tudo
   return
 })
