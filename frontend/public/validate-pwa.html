@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validação PWA Manifest - SmartAdega</title>
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #8d1d45;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin: 10px 5px;
+        }
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .icon-card {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .icon-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border-color: #8d1d45;
+        }
+        .icon-card img {
+            display: block;
+            margin: 15px auto;
+            border-radius: 20%;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .icon-size {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #8d1d45;
+            margin-bottom: 10px;
+        }
+        .icon-purpose {
+            display: inline-block;
+            background: #8d1d45;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin: 5px 2px;
+        }
+        .info-section {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .warning-section {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        th {
+            background: #8d1d45;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #f8f9fa;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #8d1d45;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .btn:hover {
+            background: #6d1535;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(141, 29, 69, 0.4);
+        }
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .checklist li::before {
+            content: "✓";
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #28a745;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        .metric {
+            display: inline-block;
+            margin: 10px 20px 10px 0;
+        }
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #8d1d45;
+        }
+        .metric-label {
+            font-size: 0.9em;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>📱 Validação PWA Manifest</h1>
+            <p class="subtitle">SmartAdega - Análise completa de ícones e configuração</p>
+            
+            <div id="status-badges"></div>
+            
+            <div class="metric">
+                <div class="metric-value" id="total-icons">-</div>
+                <div class="metric-label">Ícones</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value" id="maskable-icons">-</div>
+                <div class="metric-label">Maskable</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value" id="manifest-size">-</div>
+                <div class="metric-label">Tamanho do Manifest</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🎯 Ícones PWA Configurados</h2>
+            <p style="color: #666; margin-bottom: 20px;">
+                Todos os ícones com bordas arredondadas e suporte a maskable icons do Android
+            </p>
+            <div class="icon-grid" id="icon-grid"></div>
+        </div>
+
+        <div class="card">
+            <h2>📊 Informações do Manifest</h2>
+            <table id="manifest-table">
+                <thead>
+                    <tr>
+                        <th>Propriedade</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>✅ Checklist de Validação PWA</h2>
+            <ul class="checklist">
+                <li>Manifest.json está presente e válido</li>
+                <li>Ícones em múltiplos tamanhos (192, 256, 384, 512)</li>
+                <li>Purpose "maskable any" configurado</li>
+                <li>Bordas arredondadas aplicadas</li>
+                <li>Theme color e background color definidos</li>
+                <li>Display standalone configurado</li>
+                <li>Todos os ícones carregam sem erro 404</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>🔍 Teste no DevTools</h2>
+            <div class="info-section">
+                <strong>📍 Como validar:</strong>
+                <ol style="margin-top: 10px; line-height: 1.8;">
+                    <li>Abra o Chrome DevTools (F12)</li>
+                    <li>Vá para a aba <strong>Application</strong></li>
+                    <li>No menu lateral, clique em <strong>Manifest</strong></li>
+                    <li>Verifique se todos os ícones aparecem com preview</li>
+                    <li>Confirme que "maskable" está listado no purpose</li>
+                </ol>
+            </div>
+            
+            <button class="btn" onclick="openDevTools()">🔧 Abrir Application Tab</button>
+            <button class="btn" onclick="testInstallability()">📲 Testar Instalação</button>
+            <button class="btn" onclick="runLighthouse()">🚀 Auditar com Lighthouse</button>
+        </div>
+
+        <div class="card">
+            <h2>💡 Teste de Maskable Icons</h2>
+            <p style="margin-bottom: 15px;">Os ícones maskable permitem que o Android adapte seu formato:</p>
+            
+            <div class="info-section">
+                <strong>🎨 Visualizador Online:</strong>
+                <p style="margin-top: 10px;">
+                    Use o <a href="https://maskable.app/editor" target="_blank" style="color: #2196F3; font-weight: bold;">Maskable.app Editor</a> 
+                    para testar seus ícones em diferentes formatos de adaptive icons.
+                </p>
+                <p style="margin-top: 10px; font-size: 0.9em; color: #666;">
+                    Upload: <code style="background: #f0f0f0; padding: 2px 8px; border-radius: 4px;">icons/icon-512.png</code>
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📱 Como Testar em Dispositivos</h2>
+            
+            <h3 style="margin-top: 20px;">Android (Chrome):</h3>
+            <ol style="line-height: 1.8; margin-left: 20px;">
+                <li>Abra o site no Chrome Android</li>
+                <li>Toque no menu (⋮)</li>
+                <li>Selecione "Adicionar à tela inicial"</li>
+                <li>Observe o ícone com bordas arredondadas adaptativas</li>
+            </ol>
+
+            <h3 style="margin-top: 20px;">iOS (Safari):</h3>
+            <ol style="line-height: 1.8; margin-left: 20px;">
+                <li>Abra o site no Safari iOS</li>
+                <li>Toque no botão de Compartilhar</li>
+                <li>Selecione "Adicionar à Tela de Início"</li>
+                <li>Verifique o ícone apple-touch-icon</li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h2>📝 Manifest.json Completo</h2>
+            <div class="code-block" id="manifest-code"></div>
+        </div>
+    </div>
+
+    <script>
+        let manifestData = null;
+        let installPrompt = null;
+
+        // Capturar evento de instalação
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            installPrompt = e;
+            console.log('✅ PWA instalável detectado!');
+        });
+
+        // Carregar e validar manifest
+        async function loadManifest() {
+            try {
+                const response = await fetch('/manifest.json');
+                manifestData = await response.json();
+                
+                // Atualizar métricas
+                document.getElementById('total-icons').textContent = manifestData.icons.length;
+                document.getElementById('maskable-icons').textContent = 
+                    manifestData.icons.filter(i => i.purpose?.includes('maskable')).length;
+                document.getElementById('manifest-size').textContent = 
+                    (new Blob([JSON.stringify(manifestData)]).size / 1024).toFixed(2) + ' KB';
+
+                // Renderizar ícones
+                renderIcons();
+                
+                // Renderizar tabela de informações
+                renderManifestInfo();
+                
+                // Mostrar código
+                document.getElementById('manifest-code').textContent = 
+                    JSON.stringify(manifestData, null, 2);
+
+                // Status badges
+                updateStatusBadges();
+
+            } catch (error) {
+                console.error('Erro ao carregar manifest:', error);
+                document.getElementById('status-badges').innerHTML = 
+                    '<span class="status-badge status-error">❌ Erro ao carregar manifest.json</span>';
+            }
+        }
+
+        function renderIcons() {
+            const grid = document.getElementById('icon-grid');
+            grid.innerHTML = '';
+
+            manifestData.icons.forEach((icon, index) => {
+                const card = document.createElement('div');
+                card.className = 'icon-card';
+                
+                const purposes = icon.purpose.split(' ').map(p => 
+                    `<span class="icon-purpose">${p}</span>`
+                ).join('');
+
+                card.innerHTML = `
+                    <div class="icon-size">${icon.sizes}</div>
+                    <img src="/${icon.src}" 
+                         alt="Icon ${icon.sizes}" 
+                         width="${Math.min(192, parseInt(icon.sizes))}" 
+                         height="${Math.min(192, parseInt(icon.sizes))}"
+                         onerror="this.style.border='2px solid red'">
+                    <div style="margin: 10px 0;">${purposes}</div>
+                    <code style="font-size: 0.8em; color: #666;">${icon.src}</code>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function renderManifestInfo() {
+            const tbody = document.querySelector('#manifest-table tbody');
+            const properties = [
+                { key: 'name', label: 'Nome', required: true },
+                { key: 'short_name', label: 'Nome Curto', required: true },
+                { key: 'description', label: 'Descrição', required: false },
+                { key: 'start_url', label: 'Start URL', required: true },
+                { key: 'display', label: 'Display Mode', required: true },
+                { key: 'theme_color', label: 'Theme Color', required: true },
+                { key: 'background_color', label: 'Background Color', required: true },
+                { key: 'orientation', label: 'Orientação', required: false }
+            ];
+
+            properties.forEach(prop => {
+                const row = tbody.insertRow();
+                const value = manifestData[prop.key];
+                const status = value ? '✅ OK' : '⚠️ Ausente';
+                
+                row.innerHTML = `
+                    <td><strong>${prop.label}</strong></td>
+                    <td><code>${value || '-'}</code></td>
+                    <td>${status}</td>
+                `;
+            });
+        }
+
+        function updateStatusBadges() {
+            const badges = document.getElementById('status-badges');
+            let html = '';
+
+            // Verificar manifest válido
+            if (manifestData) {
+                html += '<span class="status-badge status-success">✅ Manifest Válido</span>';
+            }
+
+            // Verificar ícones maskable
+            const maskableCount = manifestData.icons.filter(i => i.purpose?.includes('maskable')).length;
+            if (maskableCount >= 2) {
+                html += '<span class="status-badge status-success">✅ Maskable Icons OK</span>';
+            } else {
+                html += '<span class="status-badge status-warning">⚠️ Poucos Maskable Icons</span>';
+            }
+
+            // Verificar múltiplos tamanhos
+            if (manifestData.icons.length >= 4) {
+                html += '<span class="status-badge status-success">✅ Múltiplos Tamanhos</span>';
+            }
+
+            // Verificar display standalone
+            if (manifestData.display === 'standalone') {
+                html += '<span class="status-badge status-success">✅ Standalone Mode</span>';
+            }
+
+            badges.innerHTML = html;
+        }
+
+        function openDevTools() {
+            alert('📍 Abra o DevTools manualmente:\n\n1. Pressione F12\n2. Vá para a aba "Application"\n3. Clique em "Manifest" no menu lateral\n4. Verifique os ícones e configurações');
+        }
+
+        function testInstallability() {
+            if (installPrompt) {
+                installPrompt.prompt();
+                installPrompt.userChoice.then(choice => {
+                    if (choice.outcome === 'accepted') {
+                        alert('✅ PWA instalado com sucesso!');
+                    } else {
+                        alert('❌ Instalação cancelada pelo usuário');
+                    }
+                    installPrompt = null;
+                });
+            } else {
+                alert('⚠️ PWA não está instalável neste momento.\n\nMotivos possíveis:\n- Já está instalado\n- Critérios do PWA não atendidos\n- Navegador não suporta\n\nTente em um dispositivo móvel ou verifique o console do DevTools.');
+            }
+        }
+
+        function runLighthouse() {
+            alert('🚀 Para executar o Lighthouse:\n\n1. Abra o DevTools (F12)\n2. Vá para a aba "Lighthouse"\n3. Selecione "Progressive Web App"\n4. Clique em "Analyze page load"\n5. Verifique a pontuação e recomendações');
+        }
+
+        // Carregar ao iniciar
+        loadManifest();
+    </script>
+</body>
+</html>

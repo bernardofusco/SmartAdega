@@ -115,6 +115,8 @@ def main():
     print('📱 Gerando ícones PWA...')
     pwa_sizes = [
         (512, 'icon-512.png'),
+        (384, 'icon-384.png'),
+        (256, 'icon-256.png'),
         (192, 'icon-192.png'),
         (180, 'icon-180.png')
     ]

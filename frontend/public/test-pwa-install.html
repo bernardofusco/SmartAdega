@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Teste - PWA Install Prompt</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #8d1d45;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        h2 {
+            color: #8d1d45;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #8d1d45;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #8d1d45;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .warning {
+            color: #ffc107;
+            font-weight: bold;
+        }
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .checklist li::before {
+            content: "☐";
+            display: inline-block;
+            width: 25px;
+            font-size: 1.2em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #8d1d45;
+            color: white;
+        }
+        .screenshot {
+            background: #f0f0f0;
+            border: 2px dashed #ccc;
+            padding: 40px;
+            text-align: center;
+            color: #666;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #8d1d45;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin: 10px 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>🧪 Guia de Teste - PWA Install Prompt</h1>
+            <p style="color: #666; margin-top: 10px;">
+                Manual completo para validar o banner de instalação do SmartAdega PWA
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>📋 Checklist Pré-Teste</h2>
+            <ul class="checklist">
+                <li>Build do projeto executado com sucesso</li>
+                <li>Manifest.json configurado corretamente</li>
+                <li>Ícones PWA gerados (192, 256, 384, 512)</li>
+                <li>Service Worker registrado (opcional)</li>
+                <li>App acessível via HTTPS ou localhost</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>🖥️ Teste 1: DevTools Desktop</h2>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Iniciar servidor de desenvolvimento</strong>
+                <div class="code-block">npm run dev
+# ou
+npm run preview (para build de produção)</div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>Abrir Chrome DevTools</strong>
+                <p style="margin-top: 10px;">
+                    Pressione <code>F12</code> ou <code>Ctrl+Shift+I</code>
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Ativar modo dispositivo móvel</strong>
+                <p style="margin-top: 10px;">
+                    Pressione <code>Ctrl+Shift+M</code> ou clique no ícone de dispositivo
+                </p>
+                <p style="margin-top: 10px; color: #666;">
+                    Selecione: iPhone 12 Pro, Pixel 5, ou qualquer device < 768px
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <strong>Verificar painel de debug</strong>
+                <p style="margin-top: 10px;">
+                    <span class="success">✓ Deve aparecer no canto inferior direito</span>
+                </p>
+                <p style="margin-top: 10px;">Informações exibidas:</p>
+                <ul style="margin-left: 20px; margin-top: 5px;">
+                    <li>Prompt visível: ✗ Não (inicialmente)</li>
+                    <li>Plataforma: 🤖 Android/Other</li>
+                    <li>Standalone: ✗ Navegador</li>
+                    <li>LocalStorage keys (vazias inicialmente)</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <span class="step-number">5</span>
+                <strong>Resetar flags e recarregar</strong>
+                <p style="margin-top: 10px;">
+                    Clique em <code>🔄 Resetar Flags</code> no painel de debug
+                </p>
+                <p style="margin-top: 10px;">
+                    Pressione <code>F5</code> para recarregar
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">6</span>
+                <strong>Validar aparecimento do banner</strong>
+                <p style="margin-top: 10px;">
+                    <span class="success">✓ Banner deve aparecer no bottom com animação slide-up</span>
+                </p>
+                <div class="screenshot">
+                    [Banner aparece aqui]<br>
+                    Gradiente vinho, ícone do app, botões de ação
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🔄 Teste 2: Fluxo de Dismissal</h2>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Com banner visível, clicar "Agora não"</strong>
+                <p style="margin-top: 10px;">
+                    <span class="success">✓ Banner desaparece com animação slide-down</span>
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>Verificar localStorage</strong>
+                <p style="margin-top: 10px;">No painel de debug, verificar:</p>
+                <div class="code-block">Shown: true
+Dismissed: [timestamp atual]
+Installed: ❌</div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Recarregar página (F5)</strong>
+                <p style="margin-top: 10px;">
+                    <span class="success">✓ Banner NÃO deve aparecer (flag persistida)</span>
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <strong>Verificar múltiplos reloads</strong>
+                <p style="margin-top: 10px;">
+                    Pressione <code>F5</code> várias vezes
+                </p>
+                <p style="margin-top: 10px;">
+                    <span class="success">✓ Banner continua oculto em todas as recargas</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📲 Teste 3: Fluxo de Instalação (Android)</h2>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Resetar e recarregar</strong>
+                <p style="margin-top: 10px;">
+                    Painel Debug → <code>Resetar Flags</code> → <code>F5</code>
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>Clicar "⚡ Instalar agora"</strong>
+                <p style="margin-top: 10px;">
+                    <span class="success">✓ Botão mostra "Instalando..." com spinner</span>
+                </p>
+                <p style="margin-top: 10px;">
+                    <span class="success">✓ Prompt nativo do Chrome aparece</span>
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Aceitar ou recusar instalação</strong>
+                <p style="margin-top: 10px;">
+                    Se aceitar:
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li><span class="success">✓ App instala e abre</span></li>
+                        <li><span class="success">✓ Banner fecha automaticamente</span></li>
+                        <li><span class="success">✓ Flag "installed" = true</span></li>
+                    </ul>
+                </p>
+                <p style="margin-top: 10px;">
+                    Se recusar:
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li><span class="warning">⚠ Banner fecha</span></li>
+                        <li><span class="warning">⚠ Flag "dismissed" atualizada</span></li>
+                    </ul>
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <strong>Verificar console</strong>
+                <p style="margin-top: 10px;">DevTools → Console, procurar por:</p>
+                <div class="code-block">✅ PWA: beforeinstallprompt capturado
+👤 Usuário aceitou instalar
+✅ PWA instalado com sucesso!</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🍎 Teste 4: iOS (Safari)</h2>
+            
+            <p style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <strong>⚠️ Nota:</strong> iOS não suporta <code>beforeinstallprompt</code>. 
+                O banner mostra instruções manuais.
+            </p>
+
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Simular iOS no DevTools</strong>
+                <p style="margin-top: 10px;">
+                    Selecionar <code>iPhone 12 Pro</code> ou similar
+                </p>
+                <p style="margin-top: 10px; color: #666;">
+                    Nota: DevTools não simula perfeitamente iOS, mas testa detecção
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>Verificar detecção no painel</strong>
+                <p style="margin-top: 10px;">
+                    Painel Debug → Plataforma: <span class="success">🍎 iOS</span>
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Clicar "📱 Ver instruções"</strong>
+                <p style="margin-top: 10px;">
+                    <span class="success">✓ Modal com instruções aparece</span>
+                </p>
+                <p style="margin-top: 10px;">Conteúdo do modal:</p>
+                <ol style="margin-left: 20px; margin-top: 5px;">
+                    <li>Toque no botão Compartilhar</li>
+                    <li>Role e selecione "Adicionar à Tela de Início"</li>
+                    <li>Toque em "Adicionar"</li>
+                </ol>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <strong>Testar em dispositivo iOS real</strong>
+                <p style="margin-top: 10px;">
+                    Acesse via <code>https://</code> (requer SSL)
+                </p>
+                <p style="margin-top: 10px;">
+                    Banner aparece → Seguir instruções → App instalado
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📱 Teste 5: Dispositivo Android Real</h2>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Build de produção</strong>
+                <div class="code-block">npm run build
+npm run preview</div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>Expor localhost (ngrok/localtunnel)</strong>
+                <div class="code-block"># Opção 1: ngrok
+ngrok http 4173
+
+# Opção 2: localtunnel
+npx localtunnel --port 4173</div>
+                <p style="margin-top: 10px;">
+                    Copie a URL pública gerada
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Acessar do celular Android</strong>
+                <p style="margin-top: 10px;">
+                    Chrome Android → Cole a URL → Enter
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <strong>Primeira visita</strong>
+                <p style="margin-top: 10px;">
+                    <span class="success">✓ Banner aparece automaticamente</span>
+                </p>
+                <p style="margin-top: 10px;">
+                    <span class="success">✓ Botão "Instalar agora" visível</span>
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">5</span>
+                <strong>Instalar</strong>
+                <p style="margin-top: 10px;">
+                    Toque "Instalar agora" → Prompt nativo → "Instalar"
+                </p>
+                <p style="margin-top: 10px;">
+                    <span class="success">✓ App instalado na tela inicial</span>
+                </p>
+                <p style="margin-top: 10px;">
+                    <span class="success">✓ Ícone maskable aparece com bordas do sistema</span>
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">6</span>
+                <strong>Segunda visita (navegador)</strong>
+                <p style="margin-top: 10px;">
+                    Volte ao Chrome → Acesse URL novamente
+                </p>
+                <p style="margin-top: 10px;">
+                    <span class="success">✓ Banner NÃO aparece (flag persistida)</span>
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">7</span>
+                <strong>Abrir app instalado</strong>
+                <p style="margin-top: 10px;">
+                    Toque no ícone na tela inicial
+                </p>
+                <p style="margin-top: 10px;">
+                    <span class="success">✓ Abre em tela cheia (standalone)</span>
+                </p>
+                <p style="margin-top: 10px;">
+                    <span class="success">✓ Banner NÃO aparece (detecta standalone)</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🔍 Validação Final</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cenário</th>
+                        <th>Comportamento Esperado</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Desktop (largura > 768px)</td>
+                        <td>Banner NÃO aparece</td>
+                        <td><span class="success">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Mobile - Primeira visita</td>
+                        <td>Banner APARECE</td>
+                        <td><span class="success">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Mobile - Segunda visita</td>
+                        <td>Banner NÃO aparece</td>
+                        <td><span class="success">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Clicar "Agora não"</td>
+                        <td>Banner fecha e não reaparece</td>
+                        <td><span class="success">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Instalar (Android)</td>
+                        <td>Prompt nativo → App instala</td>
+                        <td><span class="success">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>iOS Safari</td>
+                        <td>Modal com instruções</td>
+                        <td><span class="success">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>App standalone</td>
+                        <td>Banner NÃO aparece</td>
+                        <td><span class="success">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>LocalStorage persiste</td>
+                        <td>Flags mantidas entre reloads</td>
+                        <td><span class="success">✓</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>🐛 Debug Commands</h2>
+            
+            <p>Comandos úteis no console do navegador:</p>
+
+            <h3 style="margin-top: 20px;">Ver flags do localStorage:</h3>
+            <div class="code-block">localStorage.getItem('pwa_install_prompt_shown')
+localStorage.getItem('pwa_install_prompt_dismissed_at')
+localStorage.getItem('pwa_installed')</div>
+
+            <h3 style="margin-top: 20px;">Limpar todas as flags:</h3>
+            <div class="code-block">localStorage.removeItem('pwa_install_prompt_shown')
+localStorage.removeItem('pwa_install_prompt_dismissed_at')
+localStorage.removeItem('pwa_installed')
+location.reload()</div>
+
+            <h3 style="margin-top: 20px;">Verificar detecção de mobile:</h3>
+            <div class="code-block">const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+console.log('É mobile?', isMobile)
+console.log('Largura:', window.innerWidth)</div>
+
+            <h3 style="margin-top: 20px;">Verificar standalone mode:</h3>
+            <div class="code-block">const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+console.log('Está em standalone?', isStandalone)</div>
+        </div>
+
+        <div class="card">
+            <h2>✅ Conclusão</h2>
+            <p style="line-height: 1.6;">
+                Se todos os testes acima passaram, o PWA Install Prompt está funcionando corretamente!
+            </p>
+            <p style="margin-top: 15px; line-height: 1.6;">
+                <strong>Lembre-se:</strong> Em produção, remova ou desabilite o <code>PWADebugPanel</code> 
+                para usuários finais (já configurado para aparecer apenas em DEV).
+            </p>
+            <p style="margin-top: 15px; line-height: 1.6;">
+                <strong>Documentação completa:</strong> Consulte 
+                <code>PWA_INSTALL_PROMPT.md</code> para detalhes de implementação e configurações avançadas.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
