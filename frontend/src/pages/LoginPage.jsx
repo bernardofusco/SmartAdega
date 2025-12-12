@@ -109,6 +109,7 @@ const LoginPage = () => {
           <form className="space-y-6" onSubmit={handleEmailLogin}>
             <div className="space-y-4">
               <Input
+                data-testid="login-email"
                 label="E-mail"
                 type="email"
                 required
@@ -118,6 +119,7 @@ const LoginPage = () => {
               />
               
               <Input
+                data-testid="login-password"
                 label="Senha"
                 type="password"
                 required
@@ -128,6 +130,7 @@ const LoginPage = () => {
             </div>
 
             <Button
+              data-testid="login-submit"
               type="submit"
               variant="primary"
               className="w-full h-12 text-base font-semibold shadow-md bg-wine-700 text-white hover:bg-wine-600 dark:bg-dark-wine-primary dark:hover:bg-dark-wine-secondary rounded-full"
@@ -220,13 +223,16 @@ const LoginPage = () => {
           </div>
 
           <div className="text-center">
-            <button
-              type="button"
-              onClick={() => navigate('/signup')}
+            <a
+              href="#/signup"
+              onClick={(e) => {
+                e.preventDefault()
+                navigate('/signup')
+              }}
               className="text-sm text-wine-600 dark:text-dark-wine-primary hover:underline"
             >
-              Não tem conta? Cadastre-se
-            </button>
+              Não tem conta? Criar conta
+            </a>
           </div>
         </div>
       </div>

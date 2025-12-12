@@ -101,6 +101,8 @@ const WinesPage = () => {
     try {
       await deleteWine.mutateAsync(id)
       addToast('Vinho excluido com sucesso!', 'success')
+      // Força refetch imediato após delete
+      await refetch()
     } catch (error) {
       addToast(error.message || 'Erro ao excluir vinho', 'error')
     }
@@ -121,6 +123,7 @@ const WinesPage = () => {
         <WineSortSelect value={sortOption} onChange={setSortOption} />
         
         <button
+          data-testid="add-wine-button"
           onClick={() => handleOpenModal()}
           className="bg-wine-700 text-white hover:bg-wine-500 dark:bg-dark-wine-primary dark:hover:bg-dark-wine-secondary px-4 py-2 h-11 rounded-md font-inter font-medium transition-all flex items-center gap-2"
         >

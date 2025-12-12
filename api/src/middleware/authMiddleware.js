@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 
 const authMiddleware = async (req, res, next) => {
+  let token; // Declarar fora do try para evitar ReferenceError no catch
+  
   try {
     const authHeader = req.headers.authorization;
     
@@ -10,7 +12,7 @@ const authMiddleware = async (req, res, next) => {
       });
     }
 
-    const token = authHeader.replace('Bearer ', '');
+    token = authHeader.replace('Bearer ', '');
     
     // Verificar token JWT do Supabase
     const supabaseJwtSecret = process.env.SUPABASE_JWT_SECRET;
@@ -34,7 +36,9 @@ const authMiddleware = async (req, res, next) => {
     next();
   } catch (error) {
     console.error('❌ Erro de autenticação:', error.message);
-    console.error('Token preview:', token.substring(0, 50) + '...');
+    if (token) {
+      console.error('Token preview:', token.substring(0, 50) + '...');
+    }
     
     // Se for erro de signature, dar mais detalhes
     if (error.name === 'JsonWebTokenError') {
@@ -44,8 +48,7 @@ const authMiddleware = async (req, res, next) => {
     }
     
     return res.status(401).json({ 
-      error: 'Token inválido ou expirado',
-      detail: error.message
+      error: 'Token inválido ou expirado'
     });
   }
 };
