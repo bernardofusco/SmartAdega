@@ -5,7 +5,7 @@ import { useAuthStore } from '../stores/authStore'
 import { useToastStore } from '../stores/toastStore'
 import Input from '../components/Input'
 import Button from '../components/Button'
-import logoImg from '../../logo.jpg'
+import logoImg from '../../Logo.jpg'
 
 const LoginPage = () => {
   const [email, setEmail] = useState('')
