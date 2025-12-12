@@ -2,6 +2,8 @@ import { RouterProvider } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useAuth } from './hooks/useAuth'
 import { router } from './routes'
+import { PWAInstallBanner } from './components/PWAInstallBanner'
+import { PWADebugPanel } from './components/PWADebugPanel'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,6 +25,8 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthInitializer />
       <RouterProvider router={router} />
+      <PWAInstallBanner />
+      <PWADebugPanel />
     </QueryClientProvider>
   )
 }
