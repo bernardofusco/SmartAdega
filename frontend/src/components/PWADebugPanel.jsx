@@ -63,15 +63,10 @@ export function PWADebugPanel() {
           <div className="text-gray-400 mb-2 font-semibold">LocalStorage:</div>
           <div className="space-y-1 text-[10px]">
             <div>
-              Shown: {localStorage.getItem('pwa_install_prompt_shown') || '❌'}
-            </div>
-            <div>
-              Dismissed: {localStorage.getItem('pwa_install_prompt_dismissed_at') 
-                ? new Date(parseInt(localStorage.getItem('pwa_install_prompt_dismissed_at'))).toLocaleTimeString() 
-                : '❌'}
-            </div>
-            <div>
               Installed: {localStorage.getItem('pwa_installed') || '❌'}
+            </div>
+            <div className="text-gray-500 mt-2">
+              (Sem controle de "shown" - sempre exibe)
             </div>
           </div>
         </div>
@@ -97,14 +92,12 @@ export function PWADebugPanel() {
 
         {/* Instruções */}
         <div className="mt-3 pt-3 border-t border-gray-700 text-[10px] text-gray-400">
-          <p className="mb-1"><strong>Testar:</strong></p>
-          <ol className="list-decimal list-inside space-y-1">
-            <li>Limpe flags com "Resetar"</li>
-            <li>Recarregue (F5)</li>
-            <li>Banner deve aparecer</li>
-            <li>Feche e recarregue</li>
-            <li>Banner não deve aparecer</li>
-          </ol>
+          <p className="mb-1"><strong>Nova lógica:</strong></p>
+          <ul className="list-disc list-inside space-y-1">
+            <li>Banner aparece sempre em mobile</li>
+            <li>Fechar → reaparece no reload</li>
+            <li>Só oculta se instalar ou standalone</li>
+          </ul>
         </div>
       </div>
     </div>

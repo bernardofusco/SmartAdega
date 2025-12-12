@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste PWA Banner - Sempre Visível</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #8d1d45 0%, #6d1535 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        h2 {
+            font-size: 1.8em;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-bottom: 10px;
+        }
+        .step {
+            background: rgba(255, 255, 255, 0.15);
+            border-left: 4px solid #fff;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .step-number {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: white;
+            color: #8d1d45;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 1.1em;
+        }
+        code {
+            background: rgba(0,0,0,0.3);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #ffd700;
+        }
+        .highlight {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            margin: 15px 0;
+        }
+        .success {
+            color: #90EE90;
+            font-weight: bold;
+        }
+        .warning {
+            color: #FFD700;
+            font-weight: bold;
+        }
+        ul, ol {
+            margin-left: 25px;
+            margin-top: 10px;
+            line-height: 1.8;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: rgba(255,255,255,0.1);
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        th {
+            background: rgba(255,255,255,0.2);
+            font-weight: bold;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: white;
+            color: #8d1d45;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin: 10px 5px 10px 0;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .btn:hover {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>🔄 Nova Lógica - Banner Sempre Visível</h1>
+            <p style="font-size: 1.1em; margin-top: 15px; opacity: 0.9;">
+                O banner de instalação PWA agora aparece <strong>sempre</strong> que o usuário acessar via mobile (exceto se já instalado).
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>📋 Mudanças Implementadas</h2>
+            
+            <div class="highlight">
+                <strong>✨ ANTES:</strong> Banner aparecia apenas na primeira visita
+                <br><br>
+                <strong>⚡ AGORA:</strong> Banner aparece em toda visita mobile
+            </div>
+
+            <h3 style="margin-top: 25px; margin-bottom: 15px;">Lógica Simplificada:</h3>
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>É dispositivo móvel?</strong>
+                <p style="margin-top: 8px; margin-left: 47px;">
+                    ✓ Sim → Continua<br>
+                    ✗ Não → Banner não aparece
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>App já está instalado?</strong>
+                <p style="margin-top: 8px; margin-left: 47px;">
+                    ✓ Sim (standalone) → Banner não aparece<br>
+                    ✗ Não → <span class="success">MOSTRA BANNER</span>
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Usuário clica "Agora não"</strong>
+                <p style="margin-top: 8px; margin-left: 47px;">
+                    Banner fecha → No próximo reload → <span class="success">MOSTRA BANNER novamente</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🧪 Teste Rápido (DevTools)</h2>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Abrir modo dispositivo</strong>
+                <p style="margin-top: 8px; margin-left: 47px;">
+                    Pressione <code>Ctrl+Shift+M</code> no Chrome DevTools<br>
+                    Selecione: iPhone, Pixel ou qualquer device < 768px
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>Primeira carga</strong>
+                <p style="margin-top: 8px; margin-left: 47px;">
+                    <span class="success">✓ Banner aparece no bottom</span><br>
+                    Animação slide-up, gradiente vinho
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Fechar banner</strong>
+                <p style="margin-top: 8px; margin-left: 47px;">
+                    Clique "Agora não"<br>
+                    <span class="success">✓ Banner fecha com animação</span>
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <strong>Reload (F5)</strong>
+                <p style="margin-top: 8px; margin-left: 47px;">
+                    <span class="success">✓ Banner reaparece automaticamente!</span><br>
+                    <span class="warning">⚠️ Este é o novo comportamento</span>
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">5</span>
+                <strong>Múltiplos reloads</strong>
+                <p style="margin-top: 8px; margin-left: 47px;">
+                    Pressione F5 várias vezes<br>
+                    <span class="success">✓ Banner aparece em TODOS os reloads</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📊 Comparação de Comportamentos</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cenário</th>
+                        <th>Comportamento Antigo</th>
+                        <th>Comportamento Novo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Primeira visita mobile</td>
+                        <td>✓ Banner aparece</td>
+                        <td><span class="success">✓ Banner aparece</span></td>
+                    </tr>
+                    <tr>
+                        <td>Segunda visita mobile</td>
+                        <td>✗ Banner não aparece</td>
+                        <td><span class="success">✓ Banner aparece</span></td>
+                    </tr>
+                    <tr>
+                        <td>Após fechar banner</td>
+                        <td>✗ Nunca mais aparece</td>
+                        <td><span class="success">✓ Aparece no próximo load</span></td>
+                    </tr>
+                    <tr>
+                        <td>Após instalar</td>
+                        <td>✗ Não aparece (correto)</td>
+                        <td><span class="success">✗ Não aparece (correto)</span></td>
+                    </tr>
+                    <tr>
+                        <td>App em standalone</td>
+                        <td>✗ Não aparece (correto)</td>
+                        <td><span class="success">✗ Não aparece (correto)</span></td>
+                    </tr>
+                    <tr>
+                        <td>Desktop</td>
+                        <td>✗ Não aparece (correto)</td>
+                        <td><span class="success">✗ Não aparece (correto)</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>💾 LocalStorage</h2>
+            
+            <p style="margin-bottom: 15px;">Agora usa apenas 1 flag (antes eram 3):</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Uso</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>pwa_installed</code></td>
+                        <td>Marca quando app foi instalado</td>
+                        <td><span class="success">✓ Mantida</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>pwa_install_prompt_shown</code></td>
+                        <td>Marcava primeira exibição</td>
+                        <td><span class="warning">✗ Removida</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>pwa_install_prompt_dismissed_at</code></td>
+                        <td>Timestamp do dismissal</td>
+                        <td><span class="warning">✗ Removida</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="margin-top: 20px;">
+                <button class="btn" onclick="checkLocalStorage()">
+                    🔍 Verificar localStorage
+                </button>
+                <button class="btn" onclick="clearOldFlags()">
+                    🧹 Limpar flags antigas
+                </button>
+            </div>
+            
+            <div id="storage-info" style="margin-top: 15px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; display: none;">
+                <pre id="storage-content" style="color: #ffd700; font-size: 0.9em;"></pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🎯 Casos de Uso</h2>
+            
+            <h3 style="margin-top: 20px; margin-bottom: 10px;">✅ Quando o banner APARECE:</h3>
+            <ul>
+                <li>Usuário acessa via Chrome mobile (não instalado)</li>
+                <li>Usuário acessa via Safari iOS (não instalado)</li>
+                <li>A cada reload/nova visita mobile</li>
+                <li>Após fechar com "Agora não"</li>
+            </ul>
+
+            <h3 style="margin-top: 20px; margin-bottom: 10px;">❌ Quando o banner NÃO APARECE:</h3>
+            <ul>
+                <li>Usuário acessa em desktop (largura > 768px)</li>
+                <li>App já está instalado e aberto em standalone</li>
+                <li>Flag <code>pwa_installed</code> = true no localStorage</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>🚀 Validação em Dispositivo Real</h2>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Build e serve</strong>
+                <p style="margin-top: 8px; margin-left: 47px;">
+                    <code>npm run build && npm run preview</code>
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>Expor via ngrok/tunnel</strong>
+                <p style="margin-top: 8px; margin-left: 47px;">
+                    <code>ngrok http 4173</code>
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Acessar do celular</strong>
+                <p style="margin-top: 8px; margin-left: 47px;">
+                    <span class="success">✓ Banner aparece</span>
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <strong>Fechar banner</strong>
+                <p style="margin-top: 8px; margin-left: 47px;">
+                    Toque "Agora não"
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">5</span>
+                <strong>Navegar e voltar</strong>
+                <p style="margin-top: 8px; margin-left: 47px;">
+                    Saia do app → Volte via browser<br>
+                    <span class="success">✓ Banner reaparece!</span>
+                </p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">6</span>
+                <strong>Instalar</strong>
+                <p style="margin-top: 8px; margin-left: 47px;">
+                    Toque "Instalar agora" → Instale<br>
+                    <span class="success">✓ Banner para de aparecer</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>✅ Checklist de Validação</h2>
+            
+            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px;">
+                <label style="display: block; margin: 10px 0; cursor: pointer;">
+                    <input type="checkbox"> Banner aparece em device mode mobile (DevTools)
+                </label>
+                <label style="display: block; margin: 10px 0; cursor: pointer;">
+                    <input type="checkbox"> Banner reaparece após reload (F5)
+                </label>
+                <label style="display: block; margin: 10px 0; cursor: pointer;">
+                    <input type="checkbox"> Banner reaparece após fechar com "Agora não"
+                </label>
+                <label style="display: block; margin: 10px 0; cursor: pointer;">
+                    <input type="checkbox"> Banner NÃO aparece em desktop
+                </label>
+                <label style="display: block; margin: 10px 0; cursor: pointer;">
+                    <input type="checkbox"> Banner NÃO aparece após instalar
+                </label>
+                <label style="display: block; margin: 10px 0; cursor: pointer;">
+                    <input type="checkbox"> Banner NÃO aparece em modo standalone
+                </label>
+                <label style="display: block; margin: 10px 0; cursor: pointer;">
+                    <input type="checkbox"> Android: Prompt nativo funciona
+                </label>
+                <label style="display: block; margin: 10px 0; cursor: pointer;">
+                    <input type="checkbox"> iOS: Modal de instruções aparece
+                </label>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📚 Arquivos Modificados</h2>
+            
+            <ul style="font-family: 'Courier New', monospace; line-height: 2;">
+                <li><span class="success">✏️</span> src/hooks/usePWAInstall.js</li>
+                <li><span class="success">✏️</span> src/components/PWAInstallBanner.jsx</li>
+                <li><span class="success">✏️</span> src/components/PWADebugPanel.jsx</li>
+            </ul>
+
+            <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                <strong>📖 Documentação completa:</strong><br>
+                Consulte <code>PWA_INSTALL_PROMPT.md</code> para detalhes de implementação
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkLocalStorage() {
+            const info = document.getElementById('storage-info');
+            const content = document.getElementById('storage-content');
+            
+            const keys = ['pwa_installed', 'pwa_install_prompt_shown', 'pwa_install_prompt_dismissed_at'];
+            let output = 'LocalStorage atual:\n\n';
+            
+            keys.forEach(key => {
+                const value = localStorage.getItem(key);
+                output += `${key}: ${value || '(não definido)'}\n`;
+            });
+            
+            content.textContent = output;
+            info.style.display = 'block';
+        }
+
+        function clearOldFlags() {
+            localStorage.removeItem('pwa_install_prompt_shown');
+            localStorage.removeItem('pwa_install_prompt_dismissed_at');
+            
+            alert('✅ Flags antigas removidas!\n\nMantida apenas: pwa_installed');
+            checkLocalStorage();
+        }
+    </script>
+</body>
+</html>

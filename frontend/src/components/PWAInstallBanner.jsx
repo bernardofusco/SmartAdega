@@ -3,7 +3,7 @@ import { usePWAInstall } from '../hooks/usePWAInstall'
 
 /**
  * Banner de instalação do PWA
- * Aparece apenas na primeira visita em dispositivos móveis
+ * Aparece sempre que o usuário acessar via mobile (não instalado)
  * Suporta Android (prompt nativo) e iOS (instruções manuais)
  */
 export function PWAInstallBanner() {
@@ -96,7 +96,7 @@ export function PWAInstallBanner() {
                   Instalar SmartAdega
                 </h3>
                 <p className="text-sm text-white/90 leading-snug mb-3">
-                  Acesso rápido à sua adega, mesmo offline. Instale em segundos!
+                  Acesso rápido à sua adega, mesmo offline!
                 </p>
 
                 {/* Botões de ação */}
