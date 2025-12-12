@@ -101,7 +101,7 @@ router.get('/wines', authMiddleware, (req, res, next) => wineController.getWines
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/wines/:id', (req, res, next) => wineController.getWineById(req, res, next));
+router.get('/wines/:id', authMiddleware, (req, res, next) => wineController.getWineById(req, res, next));
 
 /**
  * @swagger
@@ -151,7 +151,7 @@ router.get('/wines/:id', (req, res, next) => wineController.getWineById(req, res
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/wines/:id', (req, res, next) => wineController.updateWine(req, res, next));
+router.put('/wines/:id', authMiddleware, (req, res, next) => wineController.updateWine(req, res, next));
 
 /**
  * @swagger
@@ -193,6 +193,6 @@ router.put('/wines/:id', (req, res, next) => wineController.updateWine(req, res,
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/wines/:id', (req, res, next) => wineController.deleteWine(req, res, next));
+router.delete('/wines/:id', authMiddleware, (req, res, next) => wineController.deleteWine(req, res, next));
 
 module.exports = router;
