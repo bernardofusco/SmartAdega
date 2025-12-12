@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const wineController = require('../controllers/wineController');
+const authMiddleware = require('../middleware/authMiddleware');
 
 /**
  * @swagger
@@ -9,7 +10,7 @@ const wineController = require('../controllers/wineController');
  *     summary: Criar um novo vinho
  *     tags: [Wines]
  *     security:
- *       - UserIdHeader: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -30,13 +31,13 @@ const wineController = require('../controllers/wineController');
  *             schema:
  *               $ref: '#/components/schemas/Error'
  *       401:
- *         description: Header x-user-id e obrigatorio
+ *         description: Token de autenticacao invalido ou ausente
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/wines', (req, res, next) => wineController.createWine(req, res, next));
+router.post('/wines', authMiddleware, (req, res, next) => wineController.createWine(req, res, next));
 
 /**
  * @swagger
@@ -45,7 +46,7 @@ router.post('/wines', (req, res, next) => wineController.createWine(req, res, ne
  *     summary: Listar todos os vinhos do usuario
  *     tags: [Wines]
  *     security:
- *       - UserIdHeader: []
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de vinhos
@@ -56,13 +57,13 @@ router.post('/wines', (req, res, next) => wineController.createWine(req, res, ne
  *               items:
  *                 $ref: '#/components/schemas/Wine'
  *       401:
- *         description: Header x-user-id e obrigatorio
+ *         description: Token de autenticacao invalido ou ausente
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/wines', (req, res, next) => wineController.getWines(req, res, next));
+router.get('/wines', authMiddleware, (req, res, next) => wineController.getWines(req, res, next));
 
 /**
  * @swagger

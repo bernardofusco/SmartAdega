@@ -4,10 +4,9 @@ const { createWineSchema, updateWineSchema } = require('../schemas/wineSchemas')
 class WineController {
   async createWine(req, res, next) {
     try {
-      const userId = req.headers['x-user-id'];
-
+      const userId = req.userId;
       if (!userId) {
-        return res.status(401).json({ error: 'Header x-user-id e obrigatorio' });
+        return res.status(401).json({ error: 'Usuario nao autenticado' });
       }
 
       const validatedData = createWineSchema.parse(req.body);
@@ -21,10 +20,9 @@ class WineController {
 
   async getWines(req, res, next) {
     try {
-      const userId = req.headers['x-user-id'];
-
+      const userId = req.userId;
       if (!userId) {
-        return res.status(401).json({ error: 'Header x-user-id e obrigatorio' });
+        return res.status(401).json({ error: 'Usuario nao autenticado' });
       }
 
       const wines = await wineService.getWinesByUser(userId);
@@ -37,12 +35,11 @@ class WineController {
 
   async getWineById(req, res, next) {
     try {
-      const userId = req.headers['x-user-id'];
-      const { id } = req.params;
-
+      const userId = req.userId;
       if (!userId) {
-        return res.status(401).json({ error: 'Header x-user-id e obrigatorio' });
+        return res.status(401).json({ error: 'Usuario nao autenticado' });
       }
+      const { id } = req.params;
 
       const wine = await wineService.getWineById(id, userId);
 
@@ -57,12 +54,11 @@ class WineController {
 
   async updateWine(req, res, next) {
     try {
-      const userId = req.headers['x-user-id'];
-      const { id } = req.params;
-
+      const userId = req.userId;
       if (!userId) {
-        return res.status(401).json({ error: 'Header x-user-id e obrigatorio' });
+        return res.status(401).json({ error: 'Usuario nao autenticado' });
       }
+      const { id } = req.params;
 
       const validatedData = updateWineSchema.parse(req.body);
       const wine = await wineService.updateWine(id, validatedData, userId);
@@ -78,12 +74,11 @@ class WineController {
 
   async deleteWine(req, res, next) {
     try {
-      const userId = req.headers['x-user-id'];
-      const { id } = req.params;
-
+      const userId = req.userId;
       if (!userId) {
-        return res.status(401).json({ error: 'Header x-user-id e obrigatorio' });
+        return res.status(401).json({ error: 'Usuario nao autenticado' });
       }
+      const { id } = req.params;
 
       const result = await wineService.deleteWine(id, userId);
 

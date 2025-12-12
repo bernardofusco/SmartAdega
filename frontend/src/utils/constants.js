@@ -1,7 +1,5 @@
 export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
 
-export const DEFAULT_USER_ID = import.meta.env.VITE_USER_ID || 'default-user-123'
-
 export const QUERY_KEYS = {
   WINES: 'wines',
   WINE: 'wine'
@@ -19,7 +17,10 @@ export const ROUTES = {
   HOME: '/',
   WINES: '/wines',
   WINE_DETAIL: '/wines/:id',
-  SETTINGS: '/settings'
+  SETTINGS: '/settings',
+  LOGIN: '/login',
+  SIGNUP: '/signup',
+  AUTH_CALLBACK: '/auth/callback'
 }
 
 export const MESSAGES = {
@@ -30,6 +31,7 @@ export const MESSAGES = {
   UPDATE_ERROR: 'Erro ao atualizar vinho',
   DELETE_ERROR: 'Erro ao excluir vinho',
   LOAD_ERROR: 'Erro ao carregar dados',
-  DELETE_CONFIRM: 'Tem certeza que deseja excluir este vinho?'
+  DELETE_CONFIRM: 'Tem certeza que deseja excluir este vinho?',
+  AUTH_REQUIRED: 'Você precisa estar logado para acessar esta página'
 }
 

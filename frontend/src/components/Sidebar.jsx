@@ -1,10 +1,16 @@
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useQueryClient } from '@tanstack/react-query'
+import { authService } from '../services/authService'
+import { useToastStore } from '../stores/toastStore'
 
 export default function Sidebar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [isDesktopExpanded, setIsDesktopExpanded] = useState(true)
   const location = useLocation()
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
+  const addToast = useToastStore((state) => state.addToast)
 
   const isActive = (path) => {
     return location.pathname === path
@@ -35,6 +41,24 @@ export default function Sidebar() {
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
     </svg>
   )
+
+  const LogoutIcon = () => (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+    </svg>
+  )
+
+  const handleLogout = async () => {
+    try {
+      await authService.signOut()
+      queryClient.clear()
+      addToast('Logout realizado com sucesso', 'success')
+      navigate('/login')
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error)
+      addToast('Erro ao fazer logout', 'error')
+    }
+  }
 
   return (
     <>
@@ -138,6 +162,22 @@ export default function Sidebar() {
               <SettingsIcon />
               <span className={`${!isDesktopExpanded ? 'md:hidden' : ''}`}>Configurações</span>
             </Link>
+            
+            <button
+              onClick={() => {
+                closeMobileSidebar()
+                handleLogout()
+              }}
+              className={`
+                flex items-center gap-3 px-3 py-3 rounded-lg font-inter transition-colors w-full
+                text-text-muted dark:text-dark-text-muted hover:bg-base-surface dark:hover:bg-dark-surface-secondary hover:text-wine-700 dark:hover:text-dark-wine-primary
+                ${!isDesktopExpanded ? 'md:justify-center' : ''}
+              `}
+              title="Sair"
+            >
+              <LogoutIcon />
+              <span className={`${!isDesktopExpanded ? 'md:hidden' : ''}`}>Sair</span>
+            </button>
           </div>
         </nav>
       </aside>
