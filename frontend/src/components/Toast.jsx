@@ -49,11 +49,11 @@ const Toast = () => {
   }
 
   return (
-    <div className="fixed bottom-20 left-4 right-4 z-40 space-y-2">
+    <div className="fixed top-4 right-4 z-50 flex flex-col items-end gap-3 w-full max-w-sm sm:right-6 pointer-events-none">
       {toasts.map((toast) => (
         <div
           key={toast.id}
-          className={`flex items-center gap-3 px-4 py-3 rounded-md border-l-4 shadow-soft animate-slide-in ${getToastStyles(toast.type)}`}
+          className={`flex items-center gap-3 px-4 py-3 rounded-md border-l-4 shadow-soft animate-slide-in pointer-events-auto ${getToastStyles(toast.type)}`}
         >
           <span className="flex-shrink-0">{getIcon(toast.type)}</span>
           <p className="flex-1 text-sm font-inter font-medium">{toast.message}</p>
