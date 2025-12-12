@@ -1,14 +1,14 @@
 import { Outlet } from 'react-router-dom'
-import Navbar from '../components/Navbar'
+import Sidebar from '../components/Sidebar'
 import Toast from '../components/Toast'
 
 const MainLayout = () => {
   return (
-    <div className="min-h-screen bg-base-bg dark:bg-dark-bg-primary pb-20 transition-colors">
-      <main className="p-4">
+    <div className="min-h-screen flex bg-base-bg dark:bg-dark-bg-primary transition-colors">
+      <Sidebar />
+      <main className="flex-1 p-4 md:p-6 pt-16 md:pt-6">
         <Outlet />
       </main>
-      <Navbar />
       <Toast />
     </div>
   )
