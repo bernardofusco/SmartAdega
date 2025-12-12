@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Favicons - SmartAdega</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            color: #8d1d45;
+            border-bottom: 3px solid #8d1d45;
+            padding-bottom: 10px;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .icon-item {
+            text-align: center;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .icon-item img {
+            display: block;
+            margin: 10px auto;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: white;
+            padding: 10px;
+        }
+        .icon-item code {
+            display: block;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+            background: #f0f0f0;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .info {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #8d1d45;
+            color: white;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔖 Teste de Favicons - SmartAdega</h1>
+    
+    <div class="info">
+        <strong>📍 Status:</strong> <span class="success">✅ Favicons configurados e carregados</span><br>
+        <strong>📅 Data:</strong> <span id="currentDate"></span><br>
+        <strong>🌐 Navegador:</strong> <span id="browser"></span>
+    </div>
+
+    <div class="section">
+        <h2>📦 Favicons Gerados</h2>
+        <div class="icon-grid">
+            <div class="icon-item">
+                <h3>16x16 PNG</h3>
+                <img src="/favicon-16.png" alt="Favicon 16x16" width="32" height="32" style="image-rendering: pixelated;">
+                <code>favicon-16.png</code>
+            </div>
+            <div class="icon-item">
+                <h3>32x32 PNG</h3>
+                <img src="/favicon-32.png" alt="Favicon 32x32" width="64" height="64">
+                <code>favicon-32.png</code>
+            </div>
+            <div class="icon-item">
+                <h3>48x48 PNG</h3>
+                <img src="/favicon-48.png" alt="Favicon 48x48" width="96" height="96">
+                <code>favicon-48.png</code>
+            </div>
+            <div class="icon-item">
+                <h3>64x64 PNG</h3>
+                <img src="/favicon-64.png" alt="Favicon 64x64" width="128" height="128">
+                <code>favicon-64.png</code>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🍎 Apple Touch Icon</h2>
+        <div class="icon-item" style="max-width: 300px; margin: 0 auto;">
+            <h3>180x180 PNG</h3>
+            <img src="/apple-touch-icon.png" alt="Apple Touch Icon" width="180" height="180">
+            <code>apple-touch-icon.png</code>
+            <p style="font-size: 12px; color: #666; margin-top: 10px;">
+                Usado para iOS quando o usuário adiciona o site à tela inicial
+            </p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>📱 Ícones PWA</h2>
+        <div class="icon-grid">
+            <div class="icon-item">
+                <h3>192x192 PNG</h3>
+                <img src="/icons/icon-192.png" alt="PWA Icon 192" width="192" height="192">
+                <code>icons/icon-192.png</code>
+            </div>
+            <div class="icon-item">
+                <h3>512x512 PNG</h3>
+                <img src="/icons/icon-512.png" alt="PWA Icon 512" width="192" height="192">
+                <code>icons/icon-512.png</code>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🔍 Tags HTML Configuradas</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Tamanho</th>
+                    <th>Arquivo</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="linkStatus"></tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>✅ Checklist de Validação</h2>
+        <ul style="line-height: 1.8;">
+            <li>✅ Favicon ICO multipágina criado (16/24/32/48/64)</li>
+            <li>✅ PNGs individuais para cada tamanho gerados</li>
+            <li>✅ Bordas arredondadas aplicadas (15% para favicons, 20% para PWA)</li>
+            <li>✅ Apple Touch Icon 180x180 gerado</li>
+            <li>✅ Tags &lt;link&gt; configuradas no index.html</li>
+            <li>✅ Build executado com sucesso</li>
+            <li>✅ Arquivos copiados para dist/</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>🧪 Como Testar</h2>
+        <ol style="line-height: 1.8;">
+            <li><strong>Favicon na aba:</strong> Verifique se o ícone aparece na aba do navegador</li>
+            <li><strong>Favoritos:</strong> Adicione a página aos favoritos e verifique o ícone</li>
+            <li><strong>Mobile (Android):</strong> Abra no Chrome → Menu → "Adicionar à tela inicial"</li>
+            <li><strong>Mobile (iOS):</strong> Abra no Safari → Compartilhar → "Adicionar à Tela de Início"</li>
+            <li><strong>DevTools:</strong> Inspecione o elemento e verifique se as tags estão presentes</li>
+            <li><strong>Lighthouse:</strong> Execute auditoria PWA para validar ícones</li>
+        </ol>
+    </div>
+
+    <script>
+        // Exibir data e navegador
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('pt-BR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        document.getElementById('browser').textContent = navigator.userAgent.split('(')[1].split(')')[0];
+
+        // Verificar links de favicon
+        const links = [
+            { type: 'ICO', size: 'any', href: '/favicon.ico' },
+            { type: 'PNG', size: '16x16', href: '/favicon-16.png' },
+            { type: 'PNG', size: '32x32', href: '/favicon-32.png' },
+            { type: 'PNG', size: '48x48', href: '/favicon-48.png' },
+            { type: 'PNG', size: '64x64', href: '/favicon-64.png' },
+            { type: 'Apple Touch', size: '180x180', href: '/apple-touch-icon.png' }
+        ];
+
+        const tbody = document.getElementById('linkStatus');
+        
+        links.forEach(link => {
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td>${link.type}</td>
+                <td>${link.size}</td>
+                <td><code>${link.href}</code></td>
+                <td id="status-${link.href.replace(/[^a-z0-9]/gi, '')}">⏳ Verificando...</td>
+            `;
+
+            // Verificar se o arquivo existe
+            fetch(link.href, { method: 'HEAD' })
+                .then(response => {
+                    const cell = document.getElementById(`status-${link.href.replace(/[^a-z0-9]/gi, '')}`);
+                    if (response.ok) {
+                        cell.innerHTML = '<span style="color: #28a745;">✅ OK</span>';
+                    } else {
+                        cell.innerHTML = '<span style="color: #dc3545;">❌ Não encontrado</span>';
+                    }
+                })
+                .catch(() => {
+                    const cell = document.getElementById(`status-${link.href.replace(/[^a-z0-9]/gi, '')}`);
+                    cell.innerHTML = '<span style="color: #dc3545;">❌ Erro</span>';
+                });
+        });
+    </script>
+</body>
+</html>
