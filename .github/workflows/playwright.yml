@@ -1,8 +1,6 @@
 name: Playwright Tests
 
 on:
-  push:
-    branches: [master, main, develop, feature/**]
   pull_request:
     branches: [master, main, develop]
 
@@ -25,7 +23,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     # Skip testes E2E em PRs de fork (sem acesso a secrets)
-    if: github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'push'
+    if: github.event.pull_request.head.repo.full_name == github.repository
     
     steps:
       - name: Checkout code
@@ -84,12 +82,6 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-resultssecrets.SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          SUPABASE_JWT_SECRET: ${{ secrets.SUPABASE_JWT_SECRET }}
-          API4AI_KEY: mock
-          API4AI_MOCK: 'true'
-          NODE_ENV: test
-          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
-          TEST_USER_PASSWORD: ${{ secrets
+          name: test-results
+          path: frontend/test-results/
+          retention-days: 30
