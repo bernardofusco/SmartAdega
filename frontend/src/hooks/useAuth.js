@@ -46,14 +46,17 @@ export const useAuth = () => {
       async (event, session) => {
         console.log('🔔 Auth state changed:', event, 'Session:', !!session)
         
-        if (session?.user) {
-          const user = session.user
-          console.log('✅ Sessão ativa, atualizando user:', user.email)
-          setAuth(user, session)
-        } else {
-          console.log('⚠️ Sessão removida')
+        // Só processar eventos importantes
+        if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+          if (session?.user) {
+            console.log('✅ Sessão ativa, atualizando user:', session.user.email)
+            setAuth(session.user, session)
+          }
+        } else if (event === 'SIGNED_OUT') {
+          console.log('⚠️ Logout detectado')
           clearAuth()
         }
+        // Ignorar outros eventos (USER_UPDATED, INITIAL_SESSION, etc)
       }
     )
 
