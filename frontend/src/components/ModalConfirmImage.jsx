@@ -71,14 +71,14 @@ const ModalConfirmImage = ({
                   onClick={onCancel}
                   className="flex-1"
                 >
-                  Enviar Outra Imagem
+                  Cancelar
                 </Button>
                 <Button
                   variant="primary"
                   onClick={onConfirm}
                   className="flex-1"
                 >
-                  Confirmar Imagem
+                  Analisar Imagem
                 </Button>
               </div>
             </>

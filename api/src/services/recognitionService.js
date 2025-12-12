@@ -18,6 +18,12 @@ class RecognitionService {
 
   async analyzeWineImage(file) {
     try {
+      // Mock para testes E2E (não consome quota da API4AI)
+      if (process.env.API4AI_MOCK === 'true' || process.env.NODE_ENV === 'test') {
+        console.log('🧪 Mock de reconhecimento ativado (API4AI_MOCK=true)');
+        return this.getMockWineData();
+      }
+
       if (!this.apiKey) {
         throw new Error('Chave da API nao configurada');
       }
@@ -90,6 +96,19 @@ class RecognitionService {
       uva: '',
       regiao: '',
       ano: '',
+      preco: '',
+      quantidade: '',
+      avaliacao: ''
+    };
+  }
+
+  getMockWineData() {
+    // Dados mockados para testes E2E
+    return {
+      nome_do_vinho: 'Château Test Playwright 2020',
+      uva: 'Cabernet Sauvignon',
+      regiao: 'Bordeaux',
+      ano: '2020',
       preco: '',
       quantidade: '',
       avaliacao: ''

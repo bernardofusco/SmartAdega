@@ -15,7 +15,7 @@ const wineSchema = z.object({
   region: z.string().optional().or(z.literal('')),
   year: z.preprocess(
     (val) => {
-      if (val === '' || val === null || val === undefined) return undefined
+      if (val === '' || val === null || val === undefined) return NaN
       return Number(val)
     },
     z.number({ invalid_type_error: 'Informe o ano' })
@@ -47,7 +47,7 @@ const wineSchema = z.object({
   ),
   quantity: z.preprocess(
     (val) => {
-      if (val === '' || val === null || val === undefined) return undefined
+      if (val === '' || val === null || val === undefined) return NaN
       return Number(val)
     },
     z.number({ invalid_type_error: 'Informe a quantidade' })
@@ -57,7 +57,7 @@ const wineSchema = z.object({
 })
 
 const WineForm = ({ wine, onSubmit, isLoading }) => {
-  const [activeTab, setActiveTab] = useState('upload')
+  const [activeTab, setActiveTab] = useState(wine ? 'manual' : 'upload')
   const [selectedImage, setSelectedImage] = useState(null)
   const [imageFile, setImageFile] = useState(null)
   const [isDragging, setIsDragging] = useState(false)
@@ -67,6 +67,7 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
   
   const fileInputRef = useRef(null)
   const cameraInputRef = useRef(null)
+  const imageBlobUrlRef = useRef(null)
   
   const addToast = useToastStore((state) => state.addToast)
   const { recognizedData, setRecognizedData } = useWineRecognitionStore()
@@ -76,9 +77,11 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
     handleSubmit,
     formState: { errors },
     setValue,
-    watch
+    watch,
+    reset
   } = useForm({
     resolver: zodResolver(wineSchema),
+    mode: 'onSubmit',
     defaultValues: wine || {
       name: '',
       grape: '',
@@ -91,6 +94,30 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
   })
 
   const formValues = watch()
+
+  // Atualizar valores do formulário quando wine prop mudar
+  useEffect(() => {
+    if (wine) {
+      reset({
+        name: wine.name || '',
+        grape: wine.grape || '',
+        region: wine.region || '',
+        year: wine.year || '',
+        price: wine.price || '',
+        rating: wine.rating || '',
+        quantity: wine.quantity || ''
+      })
+    }
+  }, [wine, reset])
+
+  // Cleanup: revogar blob URL ao desmontar
+  useEffect(() => {
+    return () => {
+      if (imageBlobUrlRef.current) {
+        URL.revokeObjectURL(imageBlobUrlRef.current)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     if (recognizedData) {
@@ -120,13 +147,18 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
 
   const handleImageSelect = (file) => {
     if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        setSelectedImage(e.target.result)
-        setImageFile(file)
-        setIsModalOpen(true)
+      // Revogar URL anterior se existir
+      if (imageBlobUrlRef.current) {
+        URL.revokeObjectURL(imageBlobUrlRef.current)
       }
-      reader.readAsDataURL(file)
+      
+      // Criar blob URL para preview
+      const blobUrl = URL.createObjectURL(file)
+      imageBlobUrlRef.current = blobUrl
+      
+      setSelectedImage(blobUrl)
+      setImageFile(file)
+      setIsModalOpen(true)
     }
   }
 
@@ -144,6 +176,12 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
         setActiveTab('manual')
         addToast('Vinho reconhecido com sucesso!', 'success')
       } else {
+        // Limpar blob URL em caso de falha no reconhecimento
+        if (imageBlobUrlRef.current) {
+          URL.revokeObjectURL(imageBlobUrlRef.current)
+          imageBlobUrlRef.current = null
+        }
+        
         setIsModalOpen(false)
         setSelectedImage(null)
         setImageFile(null)
@@ -151,7 +189,16 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
       }
     } catch (error) {
       console.error('Erro ao analisar imagem:', error)
+      
+      // Limpar blob URL em caso de erro
+      if (imageBlobUrlRef.current) {
+        URL.revokeObjectURL(imageBlobUrlRef.current)
+        imageBlobUrlRef.current = null
+      }
+      
       setIsModalOpen(false)
+      setSelectedImage(null)
+      setImageFile(null)
       addToast('Erro ao processar imagem. Tente novamente.', 'error')
     } finally {
       setIsAnalyzing(false)
@@ -160,6 +207,13 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
 
   const handleCancelImage = () => {
     setIsModalOpen(false)
+    
+    // Limpar blob URL
+    if (imageBlobUrlRef.current) {
+      URL.revokeObjectURL(imageBlobUrlRef.current)
+      imageBlobUrlRef.current = null
+    }
+    
     setSelectedImage(null)
     setImageFile(null)
   }
@@ -218,6 +272,8 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
           <button
             key={tab.id}
             type="button"
+            role="tab"
+            aria-selected={activeTab === tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`px-6 py-3 font-inter font-medium transition-colors relative ${
               activeTab === tab.id
@@ -263,10 +319,11 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
           )}
 
           <div>
-            <label className="text-text-main dark:text-dark-text-primary text-sm font-inter font-medium mb-2 block">
+            <label htmlFor="wine-name" className="text-text-main dark:text-dark-text-primary text-sm font-inter font-medium mb-2 block">
               Nome do Vinho <span className="text-red-600 dark:text-red-400">*</span>
             </label>
             <input
+              id="wine-name"
               type="text"
               {...register('name')}
               placeholder={formValues.name ? '' : 'Ex: Chateau Margaux'}
@@ -294,10 +351,11 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-text-main dark:text-dark-text-primary text-sm font-inter font-medium mb-2 block">
+              <label htmlFor="wine-grape" className="text-text-main dark:text-dark-text-primary text-sm font-inter font-medium mb-2 block">
                 Uva
               </label>
               <input
+                id="wine-grape"
                 type="text"
                 {...register('grape')}
                 placeholder={formValues.grape ? '' : 'Ex: Cabernet Sauvignon'}
@@ -324,10 +382,11 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
             </div>
 
             <div>
-              <label className="text-text-main dark:text-dark-text-primary text-sm font-inter font-medium mb-2 block">
-                Regiao
+              <label htmlFor="wine-region" className="text-text-main dark:text-dark-text-primary text-sm font-inter font-medium mb-2 block">
+                Região
               </label>
               <input
+                id="wine-region"
                 type="text"
                 {...register('region')}
                 placeholder={formValues.region ? '' : 'Ex: Bordeaux, Franca'}
@@ -356,10 +415,11 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="text-text-main text-sm font-inter font-medium mb-2 block">
+              <label htmlFor="wine-year" className="text-text-main text-sm font-inter font-medium mb-2 block">
                 Ano <span className="text-red-600">*</span>
               </label>
               <input
+                id="wine-year"
                 type="number"
                 {...register('year')}
                 placeholder={formValues.year ? '' : 'Ex: 2019'}
@@ -386,10 +446,11 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
             </div>
 
             <div>
-              <label className="text-text-main dark:text-dark-text-primary text-sm font-inter font-medium mb-2 block">
-                Preco (R$)
+              <label htmlFor="wine-price" className="text-text-main dark:text-dark-text-primary text-sm font-inter font-medium mb-2 block">
+                Preço (R$)
               </label>
               <input
+                id="wine-price"
                 type="number"
                 step="0.01"
                 {...register('price')}
@@ -417,10 +478,11 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
             </div>
 
             <div>
-              <label className="text-text-main text-sm font-inter font-medium mb-2 block">
+              <label htmlFor="wine-quantity" className="text-text-main text-sm font-inter font-medium mb-2 block">
                 Quantidade <span className="text-red-600">*</span>
               </label>
               <input
+                id="wine-quantity"
                 type="number"
                 {...register('quantity')}
                 placeholder={formValues.quantity ? '' : 'Ex: 6'}
@@ -448,10 +510,11 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
           </div>
 
           <div>
-            <label className="text-text-main dark:text-dark-text-primary text-sm font-inter font-medium mb-2 block">
-              Avaliacao (0 a 5)
+            <label htmlFor="wine-rating" className="text-text-main dark:text-dark-text-primary text-sm font-inter font-medium mb-2 block">
+              Avaliação (0 a 5)
             </label>
             <input
+              id="wine-rating"
               type="number"
               step="0.1"
               min="0"
@@ -487,7 +550,7 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
               disabled={isLoading}
               className="flex-1"
             >
-              {isLoading ? 'Salvando...' : wine ? 'Atualizar' : 'Criar'}
+              {isLoading ? 'Salvando...' : 'Salvar'}
             </Button>
           </div>
         </form>
@@ -635,8 +698,17 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
                 <button
                   type="button"
                   onClick={() => {
+                    // Revogar blob URL
+                    if (imageBlobUrlRef.current) {
+                      URL.revokeObjectURL(imageBlobUrlRef.current)
+                      imageBlobUrlRef.current = null
+                    }
+                    
                     setSelectedImage(null)
                     setImageFile(null)
+                    
+                    // Limpar dados de reconhecimento
+                    useWineRecognitionStore.getState().clearRecognitionData()
                   }}
                   className="text-sm text-wine-700 hover:text-wine-500 font-inter"
                 >

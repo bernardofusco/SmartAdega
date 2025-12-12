@@ -59,6 +59,7 @@ const WineCard = ({ wine, onEdit, onDelete }) => {
   return (
     <>
       <div
+        data-testid="wine-card"
         onClick={handleCardClick}
         className="bg-white dark:bg-dark-surface-primary shadow-soft dark:shadow-dark-card rounded-lg p-4 relative cursor-pointer hover:shadow-md dark:hover:shadow-xl transition-shadow duration-300 dark:border dark:border-dark-surface-border"
       >
@@ -78,6 +79,7 @@ const WineCard = ({ wine, onEdit, onDelete }) => {
 
               <div className="relative" ref={menuRef}>
                 <button
+                  data-testid={`wine-menu-${wine.id}`}
                   onClick={() => setShowMenu(!showMenu)}
                   className="p-1 hover:bg-base-surface dark:hover:bg-dark-surface-secondary rounded-md transition-colors"
                   aria-label="Menu de opcoes"
@@ -272,8 +274,6 @@ const WineCard = ({ wine, onEdit, onDelete }) => {
         isOpen={showConfirm}
         title="Excluir Vinho"
         message={`Tem certeza que deseja excluir "${wine.name}"? Esta acao nao pode ser desfeita.`}
-        confirmText="Excluir"
-        cancelText="Cancelar"
         type="danger"
         onConfirm={handleConfirmDelete}
         onCancel={() => setShowConfirm(false)}
