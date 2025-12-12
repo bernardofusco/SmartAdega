@@ -6,9 +6,9 @@ import { useState, useEffect } from 'react'
  * Funcionalidades:
  * - Detecta dispositivos móveis
  * - Captura evento beforeinstallprompt
- * - Controla exibição do prompt (apenas primeira visita)
- * - Persiste estado no localStorage
+ * - Exibe banner sempre que acessar via mobile (sem restrição de primeira visita)
  * - Suporta Android (prompt nativo) e iOS (instruções)
+ * - Não exibe se app já está instalado (standalone mode)
  */
 export function usePWAInstall() {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
@@ -16,13 +16,8 @@ export function usePWAInstall() {
   const [isIOS, setIsIOS] = useState(false)
   const [isStandalone, setIsStandalone] = useState(false)
 
-  // Chaves do localStorage
-  const STORAGE_KEY = 'pwa_install_prompt_shown'
-  const STORAGE_DISMISSED_KEY = 'pwa_install_prompt_dismissed_at'
+  // Chave do localStorage apenas para detectar instalação
   const STORAGE_INSTALLED_KEY = 'pwa_installed'
-
-  // Número de dias para reexibir após dismissal (0 = nunca mais)
-  const DAYS_TO_RESHOW = 0
 
   /**
    * Detecta se é dispositivo móvel
@@ -70,6 +65,7 @@ export function usePWAInstall() {
 
   /**
    * Verifica se deve mostrar o prompt
+   * Agora aparece sempre em mobile, exceto se já instalado
    */
   const shouldShowPrompt = () => {
     // Não mostrar em desktop
@@ -87,24 +83,8 @@ export function usePWAInstall() {
       return false
     }
 
-    // Verificar se já foi mostrado antes
-    const wasShown = localStorage.getItem(STORAGE_KEY)
-    if (!wasShown) {
-      return true // Primeira visita
-    }
-
-    // Se foi dismissed, verificar se deve reexibir
-    const dismissedAt = localStorage.getItem(STORAGE_DISMISSED_KEY)
-    if (dismissedAt && DAYS_TO_RESHOW > 0) {
-      const dismissedDate = new Date(parseInt(dismissedAt, 10))
-      const daysSince = (Date.now() - dismissedDate.getTime()) / (1000 * 60 * 60 * 24)
-      
-      if (daysSince >= DAYS_TO_RESHOW) {
-        return true // Tempo passou, pode reexibir
-      }
-    }
-
-    return false // Já foi mostrado e não deve reexibir
+    // Mostrar em todos os outros casos (sempre em mobile)
+    return true
   }
 
   /**
@@ -123,8 +103,6 @@ export function usePWAInstall() {
       // Verifica se deve mostrar o prompt
       if (shouldShowPrompt()) {
         setShowInstallPrompt(true)
-        // Marca que foi mostrado
-        localStorage.setItem(STORAGE_KEY, 'true')
       }
     }
 
@@ -137,7 +115,6 @@ export function usePWAInstall() {
     // Para iOS, mostra diretamente se deve
     if (isIOSDevice() && shouldShowPrompt()) {
       setShowInstallPrompt(true)
-      localStorage.setItem(STORAGE_KEY, 'true')
     }
 
     // Adiciona listener para Android/Chrome
@@ -192,13 +169,10 @@ export function usePWAInstall() {
 
   /**
    * Fecha o prompt sem instalar
+   * Banner reaparecerá no próximo reload/acesso
    */
   const dismissPrompt = () => {
     console.log('❌ Usuário fechou o prompt de instalação')
-    
-    // Marca timestamp do dismissal
-    localStorage.setItem(STORAGE_DISMISSED_KEY, Date.now().toString())
-    
     setShowInstallPrompt(false)
   }
 
@@ -206,8 +180,6 @@ export function usePWAInstall() {
    * Reseta flags (útil para testes)
    */
   const resetInstallPrompt = () => {
-    localStorage.removeItem(STORAGE_KEY)
-    localStorage.removeItem(STORAGE_DISMISSED_KEY)
     localStorage.removeItem(STORAGE_INSTALLED_KEY)
     setShowInstallPrompt(shouldShowPrompt())
   }
