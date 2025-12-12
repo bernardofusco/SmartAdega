@@ -13,12 +13,15 @@ const queryClient = new QueryClient({
   }
 })
 
-function App() {
-  // Inicializar autenticação
+function AuthInitializer() {
   useAuth()
+  return null
+}
 
+function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <AuthInitializer />
       <RouterProvider router={router} />
     </QueryClientProvider>
   )

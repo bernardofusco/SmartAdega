@@ -44,9 +44,9 @@ export const useAuth = () => {
     // Listener para mudanças de autenticação
     const { data: { subscription } } = authService.onAuthStateChange(
       async (event, session) => {
-        console.log('🔔 Auth state changed:', event, session)
+        console.log('🔔 Auth state changed:', event, 'Session:', !!session)
         
-        if (session) {
+        if (session?.user) {
           const user = session.user
           console.log('✅ Sessão ativa, atualizando user:', user.email)
           setAuth(user, session)

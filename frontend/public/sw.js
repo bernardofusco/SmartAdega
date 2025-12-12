@@ -13,6 +13,17 @@ self.addEventListener('install', (event) => {
 })
 
 self.addEventListener('fetch', (event) => {
+  const url = new URL(event.request.url)
+  
+  // NÃO cachear requisições de API (evita vazamento entre usuários)
+  if (url.pathname.startsWith('/api/') || 
+      url.hostname.includes('supabase.co') ||
+      url.hostname.includes('localhost:3000')) {
+    event.respondWith(fetch(event.request))
+    return
+  }
+  
+  // Cachear apenas assets estáticos (HTML, CSS, JS, imagens)
   event.respondWith(
     caches.match(event.request).then((response) => {
       return response || fetch(event.request)

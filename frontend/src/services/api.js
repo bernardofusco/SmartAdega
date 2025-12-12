@@ -9,17 +9,11 @@ const api = axios.create({
 })
 
 api.interceptors.request.use((config) => {
-  // Pegar token da store
+  // Pegar token da store (agora persistido)
   const token = useAuthStore.getState().getAccessToken()
-  const user = useAuthStore.getState().user
   
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
-  }
-  
-  // TEMPORÁRIO: adicionar x-user-id para compatibilidade
-  if (user?.id) {
-    config.headers['x-user-id'] = user.id
   }
   
   return config

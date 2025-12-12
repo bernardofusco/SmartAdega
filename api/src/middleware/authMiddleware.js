@@ -34,10 +34,13 @@ const authMiddleware = async (req, res, next) => {
     next();
   } catch (error) {
     console.error('❌ Erro de autenticação:', error.message);
+    console.error('Token preview:', token.substring(0, 50) + '...');
     
     // Se for erro de signature, dar mais detalhes
     if (error.name === 'JsonWebTokenError') {
-      console.error('JWT Secret usado:', process.env.SUPABASE_JWT_SECRET ? 'Configurado' : 'NÃO CONFIGURADO');
+      console.error('JWT Secret configurado:', !!process.env.SUPABASE_JWT_SECRET);
+      console.error('JWT Secret length:', process.env.SUPABASE_JWT_SECRET?.length);
+      console.error('IMPORTANTE: Verifique se o JWT Secret está correto no Supabase Dashboard → Settings → API')
     }
     
     return res.status(401).json({ 

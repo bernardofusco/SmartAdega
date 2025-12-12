@@ -18,7 +18,7 @@ export const useAuthStore = create(
       
       setLoading: (loading) => set({ loading }),
 
-      // Helper para pegar token
+      // Helper para pegar token (agora persistido)
       getAccessToken: () => {
         const { session } = get()
         return session?.access_token || null
@@ -32,9 +32,10 @@ export const useAuthStore = create(
     }),
     {
       name: 'auth-storage',
-      // Não persistir session completa por segurança
+      // Persistir user E session (com token)
       partialize: (state) => ({ 
-        user: state.user 
+        user: state.user,
+        session: state.session
       })
     }
   )

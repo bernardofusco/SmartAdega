@@ -1,4 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useQueryClient } from '@tanstack/react-query'
 import { authService } from '../services/authService'
 import { useAuthStore } from '../stores/authStore'
 import { useToastStore } from '../stores/toastStore'
@@ -6,6 +7,7 @@ import { useToastStore } from '../stores/toastStore'
 export default function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const user = useAuthStore((state) => state.user)
   const addToast = useToastStore((state) => state.addToast)
 
@@ -16,6 +18,7 @@ export default function Navbar() {
   const handleLogout = async () => {
     try {
       await authService.signOut()
+      queryClient.clear()
       addToast('Logout realizado com sucesso', 'success')
       navigate('/login')
     } catch (error) {

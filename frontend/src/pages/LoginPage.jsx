@@ -14,18 +14,18 @@ const LoginPage = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const addToast = useToastStore((state) => state.addToast)
-  const { user } = useAuthStore()
+  const { user, loading: authLoading } = useAuthStore()
 
   const from = location.state?.from?.pathname || '/'
 
   // Redirecionar se já estiver autenticado
   useEffect(() => {
-    console.log('🔍 Verificando autenticação. User:', user)
-    if (user) {
+    console.log('🔍 Verificando autenticação. User:', user, 'Loading:', authLoading)
+    if (!authLoading && user) {
       console.log('✅ Usuário autenticado! Redirecionando para:', from)
       navigate(from, { replace: true })
     }
-  }, [user, navigate, from])
+  }, [user, authLoading, navigate, from])
 
   const handleEmailLogin = async (e) => {
     e.preventDefault()
@@ -39,18 +39,15 @@ const LoginPage = () => {
       
       if (data.user && data.session) {
         console.log('👤 Usuário:', data.user.email)
-        console.log('🔑 Session:', data.session)
-        
-        // Forçar atualização do store imediatamente
-        const setAuth = useAuthStore.getState().setAuth
-        setAuth(data.user, data.session)
-        console.log('💾 Store atualizado manualmente')
+        console.log('🔑 Session válida')
         
         addToast('Login realizado com sucesso!', 'success')
         
-        // Redirecionar diretamente
-        console.log('🚀 Redirecionando para:', from)
-        navigate(from, { replace: true })
+        // Aguardar um momento para o onAuthStateChange processar
+        setTimeout(() => {
+          console.log('🚀 Redirecionando para:', from)
+          navigate(from, { replace: true })
+        }, 100)
       }
     } catch (error) {
       console.error('❌ Erro no login:', error)

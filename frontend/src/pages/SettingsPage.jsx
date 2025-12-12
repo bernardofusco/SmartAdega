@@ -23,15 +23,6 @@ const SettingsPage = () => {
               {user?.email}
             </p>
           </div>
-          
-          <div>
-            <label className="text-sm font-medium text-gray-700 dark:text-dark-text-secondary">
-              ID do Usuário
-            </label>
-            <p className="text-xs text-gray-600 dark:text-dark-text-muted font-mono break-all">
-              {user?.id}
-            </p>
-          </div>
         </div>
       </div>
 
