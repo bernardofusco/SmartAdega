@@ -75,12 +75,13 @@ export default defineConfig({
       reuseExistingServer: !process.env.CI,
       env: {
         NODE_ENV: 'test',
-        // Busca SUPABASE_URL de múltiplas fontes (pipeline seta ambas)
+        // Variáveis explícitas necessárias para o backend
         SUPABASE_URL: process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '',
         SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
         SUPABASE_JWT_SECRET: process.env.SUPABASE_JWT_SECRET || '',
-        API4AI_KEY: process.env.API4AI_KEY || '',
-        API4AI_MOCK: 'true', // Mock da API externa para testes
+        API4AI_KEY: process.env.API4AI_KEY || 'mock',
+        API4AI_MOCK: 'true',
+        PORT: '3000',
       },
     },
     {
