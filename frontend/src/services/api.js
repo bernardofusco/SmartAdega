@@ -28,7 +28,8 @@ api.interceptors.response.use(
       // Evitar redirect em loop
       if (!window.location.hash.includes('/login')) {
         useAuthStore.getState().clearAuth()
-        window.location.href = '/#/login'
+        // Usar hash redirect para manter o base path do Vite
+        window.location.hash = '#/login'
       }
     }
     
