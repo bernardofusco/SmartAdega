@@ -96,7 +96,7 @@ export function PWAInstallBanner() {
                   Instalar SmartAdega
                 </h3>
                 <p className="text-sm text-white/90 leading-snug mb-3">
-                  Acesso rápido à sua adega, mesmo offline!
+                  Sua adega na palma da sua mão
                 </p>
 
                 {/* Botões de ação */}
