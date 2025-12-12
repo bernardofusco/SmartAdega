@@ -75,7 +75,8 @@ export default defineConfig({
       reuseExistingServer: !process.env.CI,
       env: {
         NODE_ENV: 'test',
-        SUPABASE_URL: process.env.VITE_SUPABASE_URL || '',
+        // Busca SUPABASE_URL de múltiplas fontes (pipeline seta ambas)
+        SUPABASE_URL: process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '',
         SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
         SUPABASE_JWT_SECRET: process.env.SUPABASE_JWT_SECRET || '',
         API4AI_KEY: process.env.API4AI_KEY || '',
