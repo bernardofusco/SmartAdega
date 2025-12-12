@@ -6,6 +6,7 @@ export default defineConfig({
     plugins: [
         react(),
         VitePWA({
+            disable: true, // Desabilitar PWA em produção (evita problemas no GitHub Pages)
             registerType: 'autoUpdate',
 
             includeAssets: [
