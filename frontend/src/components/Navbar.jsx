@@ -1,10 +1,26 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { authService } from '../services/authService'
+import { useAuthStore } from '../stores/authStore'
+import { useToastStore } from '../stores/toastStore'
 
 export default function Navbar() {
   const location = useLocation()
+  const navigate = useNavigate()
+  const user = useAuthStore((state) => state.user)
+  const addToast = useToastStore((state) => state.addToast)
 
   const isActive = (path) => {
     return location.pathname === path
+  }
+
+  const handleLogout = async () => {
+    try {
+      await authService.signOut()
+      addToast('Logout realizado com sucesso', 'success')
+      navigate('/login')
+    } catch (error) {
+      addToast('Erro ao fazer logout', 'error')
+    }
   }
 
   return (
@@ -25,6 +41,12 @@ export default function Navbar() {
       >
         Configurações
       </Link>
+      <button
+        onClick={handleLogout}
+        className="font-inter text-text-muted dark:text-dark-text-muted hover:text-wine-700 dark:hover:text-dark-wine-primary transition-colors"
+      >
+        Sair
+      </button>
     </nav>
   )
 }

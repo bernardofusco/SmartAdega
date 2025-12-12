@@ -2,11 +2,7 @@ import api from './api'
 
 export const wineService = {
   getAll: async () => {
-    const { data } = await api.get('/wines', {
-      params: {
-        user_id: import.meta.env.VITE_USER_ID
-      }
-    })
+    const { data } = await api.get('/wines')
     return data
   },
 
@@ -62,11 +58,7 @@ export const wineService = {
   },
 
   delete: async (id) => {
-    const { data } = await api.delete(`/wines/${id}`, {
-      data: {
-        user_id: import.meta.env.VITE_USER_ID
-      }
-    })
+    const { data } = await api.delete(`/wines/${id}`)
     return data
   }
 }

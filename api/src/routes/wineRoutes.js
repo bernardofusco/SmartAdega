@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const wineController = require('../controllers/wineController');
+// const authMiddleware = require('../middleware/authMiddleware'); // TEMPORARIAMENTE DESABILITADO
 
 /**
  * @swagger
