@@ -65,29 +65,18 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [globalError, setGlobalError] = useState('')
   
-  const [wineData, setWineData] = useState({
-    name: '',
-    grape: '',
-    region: '',
-    year: '',
-    price: '',
-    quantity: '',
-    rating: ''
-  })
-  
   const fileInputRef = useRef(null)
   const cameraInputRef = useRef(null)
   
   const addToast = useToastStore((state) => state.addToast)
-  const { recognizedData, setRecognizedData, clearRecognitionData } = useWineRecognitionStore()
+  const { recognizedData, setRecognizedData } = useWineRecognitionStore()
   
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-    watch,
-    reset
+    watch
   } = useForm({
     resolver: zodResolver(wineSchema),
     defaultValues: wine || {
@@ -107,31 +96,24 @@ const WineForm = ({ wine, onSubmit, isLoading }) => {
     if (recognizedData) {
       if (recognizedData.nome_do_vinho && recognizedData.nome_do_vinho.trim() !== '') {
         setValue('name', recognizedData.nome_do_vinho)
-        setWineData(prev => ({ ...prev, name: recognizedData.nome_do_vinho }))
       }
       if (recognizedData.uva && recognizedData.uva.trim() !== '') {
         setValue('grape', recognizedData.uva)
-        setWineData(prev => ({ ...prev, grape: recognizedData.uva }))
       }
       if (recognizedData.regiao && recognizedData.regiao.trim() !== '') {
         setValue('region', recognizedData.regiao)
-        setWineData(prev => ({ ...prev, region: recognizedData.regiao }))
       }
       if (recognizedData.ano && recognizedData.ano.toString().trim() !== '') {
         setValue('year', parseInt(recognizedData.ano))
-        setWineData(prev => ({ ...prev, year: recognizedData.ano.toString() }))
       }
       if (recognizedData.preco && recognizedData.preco.toString().trim() !== '') {
         setValue('price', parseFloat(recognizedData.preco))
-        setWineData(prev => ({ ...prev, price: recognizedData.preco.toString() }))
       }
       if (recognizedData.quantidade && recognizedData.quantidade.toString().trim() !== '') {
         setValue('quantity', parseInt(recognizedData.quantidade))
-        setWineData(prev => ({ ...prev, quantity: recognizedData.quantidade.toString() }))
       }
       if (recognizedData.avaliacao && recognizedData.avaliacao.toString().trim() !== '') {
         setValue('rating', parseFloat(recognizedData.avaliacao))
-        setWineData(prev => ({ ...prev, rating: recognizedData.avaliacao.toString() }))
       }
     }
   }, [recognizedData, setValue])

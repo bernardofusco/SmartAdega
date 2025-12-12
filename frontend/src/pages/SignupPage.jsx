@@ -94,7 +94,7 @@ const SignupPage = () => {
           <Button
             type="submit"
             variant="primary"
-            className="w-full"
+            className="w-full h-12 text-base font-semibold shadow-md bg-wine-700 text-white hover:bg-wine-600 dark:bg-dark-wine-primary dark:hover:bg-dark-wine-secondary rounded-full"
             disabled={loading}
           >
             {loading ? 'Criando conta...' : 'Criar Conta'}

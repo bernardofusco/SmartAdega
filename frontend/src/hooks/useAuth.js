@@ -63,6 +63,8 @@ export const useAuth = () => {
     return () => {
       subscription?.unsubscribe()
     }
+    // setAuth, clearAuth e setLoading são funções do Zustand store que não mudam
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return {
