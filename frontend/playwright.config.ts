@@ -80,7 +80,6 @@ export default defineConfig({
         SUPABASE_JWT_SECRET: process.env.SUPABASE_JWT_SECRET || '',
         API4AI_KEY: process.env.API4AI_KEY || '',
         API4AI_MOCK: 'true', // Mock da API externa para testes
-        USE_MOCK_SUPABASE: process.env.USE_MOCK_SUPABASE || 'false',
       },
     },
     {

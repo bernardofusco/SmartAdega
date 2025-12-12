@@ -7,9 +7,25 @@ on:
     branches: [master, main, develop]
 
 jobs:
+  # Job informativo para PRs de fork
+  check-secrets:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name != github.repository
+    steps:
+      - name: Notice - E2E tests skipped
+        run: |
+          echo "ℹ️ Testes E2E foram pulados porque este PR vem de um fork."
+          echo ""
+          echo "🔒 Por segurança, secrets (credenciais Supabase) não são compartilhados com forks."
+          echo "✅ Testes E2E completos rodarão automaticamente após o merge."
+          echo ""
+          echo "💡 Para rodar testes localmente, configure seu próprio .env com credenciais Supabase."
+  
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    # Skip testes E2E em PRs de fork (sem acesso a secrets)
+    if: github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'push'
     
     steps:
       - name: Checkout code
@@ -36,49 +52,24 @@ jobs:
         working-directory: frontend
         run: npx playwright install --with-deps chromium
       
-      - name: Setup test environment variables
-        id: setup-env
+      - name: Verify Supabase credentials
         run: |
-          # Detecta se secrets estão disponíveis (falso em PRs de fork)
-          if [ -z "${{ secrets.SUPABASE_URL }}" ]; then
-            echo "⚠️ Secrets não disponíveis (PR de fork). Usando valores mock para testes."
-            echo "SUPABASE_URL=https://mock.supabase.co" >> $GITHUB_ENV
-            echo "SUPABASE_SERVICE_ROLE_KEY=mock-service-role-key-for-testing-only" >> $GITHUB_ENV
-            echo "SUPABASE_ANON_KEY=mock-anon-key-for-testing" >> $GITHUB_ENV
-            echo "SUPABASE_JWT_SECRET=mock-jwt-secret-minimum-32-characters-long-for-hs256" >> $GITHUB_ENV
-            echo "TEST_USER_EMAIL=test-mock@example.com" >> $GITHUB_ENV
-            echo "TEST_USER_PASSWORD=MockPassword123!" >> $GITHUB_ENV
-            echo "USE_MOCK=true" >> $GITHUB_ENV
-          else
-            echo "✅ Secrets disponíveis. Usando Supabase real."
-            echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> $GITHUB_ENV
-            echo "SUPABASE_SERVICE_ROLE_KEY=${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" >> $GITHUB_ENV
-            echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> $GITHUB_ENV
-            echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET }}" >> $GITHUB_ENV
-            echo "TEST_USER_EMAIL=${{ secrets.TEST_USER_EMAIL }}" >> $GITHUB_ENV
-            echo "TEST_USER_PASSWORD=${{ secrets.TEST_USER_PASSWORD }}" >> $GITHUB_ENV
-            echo "USE_MOCK=false" >> $GITHUB_ENV
-          fi
-      
-      - name: Verify test environment
-        run: |
-          echo "🔧 Modo de teste: $([ "$USE_MOCK" = "true" ] && echo 'MOCK (fork)' || echo 'REAL (repo principal)')"
-          echo "📧 Test user: $TEST_USER_EMAIL"
+          echo "✅ Testes E2E rodando com Supabase real"
+          echo "📧 Test user: ${{ secrets.TEST_USER_EMAIL }}"
       
       - name: Run Playwright tests
         working-directory: frontend
         env:
           VITE_API_URL: http://localhost:3000/api
-          VITE_SUPABASE_URL: ${{ env.SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ env.SUPABASE_ANON_KEY }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ env.SUPABASE_SERVICE_ROLE_KEY }}
-          SUPABASE_JWT_SECRET: ${{ env.SUPABASE_JWT_SECRET }}
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_JWT_SECRET: ${{ secrets.SUPABASE_JWT_SECRET }}
           API4AI_KEY: mock
           API4AI_MOCK: 'true'
-          USE_MOCK_SUPABASE: ${{ env.USE_MOCK }}
           NODE_ENV: test
-          TEST_USER_EMAIL: ${{ env.TEST_USER_EMAIL }}
-          TEST_USER_PASSWORD: ${{ env.TEST_USER_PASSWORD }}
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
         run: npx playwright test
       
       - name: Upload Playwright Report
@@ -93,6 +84,12 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-results
-          path: frontend/test-results/
-          retention-days: 30
+          name: test-resultssecrets.SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_JWT_SECRET: ${{ secrets.SUPABASE_JWT_SECRET }}
+          API4AI_KEY: mock
+          API4AI_MOCK: 'true'
+          NODE_ENV: test
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets
