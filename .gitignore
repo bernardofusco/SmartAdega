@@ -365,4 +365,5 @@ FodyWeavers.xsd
 # Documentation files
 *.md
 !README.md
+!README-GERAL.md
 instrucoes/
