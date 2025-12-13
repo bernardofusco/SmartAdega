@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="frontend/Logo.jpg" alt="SmartAdega Logo" width="200" style="border-radius: 20px;">
+</p>
+
 # SmartAdega
 Gerenciamento de adegas pessoais com reconhecimento por imagem (PT-BR + EN).
 
